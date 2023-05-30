@@ -1,0 +1,244 @@
+
+### Get House
+GET http://localhost:3000/api/house
+
+### Create House
+POST http://localhost:3000/api/house
+Content-Type: application/json
+
+{
+  "adress": {
+    "country": "Czechia",
+    "state": "",
+    "city": "Prague",
+    "postal_code": "145 00",
+    "line": "Strizikova 309",
+    "coordinates": {
+      "lon": -122.4194,
+      "lat": 37.7749
+    }
+  },
+  "features": {
+    "garden": true,
+    "garage": true,
+    "pool": true,
+    "cooling": "Central",
+    "heating": "Gas",
+    "other": [{ "info": "Fireplace" }, { "info": "Security System" }]
+  },
+  "properties": {
+    "build_sqft": 200,
+    "year_built": "2005-06-15",
+    "floors": 2,
+    "rooms": 9,
+    "prices": [
+      {
+        "date": "2022-01-01",
+        "price": 500000
+      },
+      {
+        "date": "2022-03-15",
+        "price": 520000
+      },
+      {
+        "date": "2022-06-30",
+        "price": 550000
+      }
+    ],
+    "photos": [
+      
+    ]
+  },
+  "props": {
+    "house_type": "Single Family",
+    "status": "On Sold",
+    "sqft": 350,
+    "price": 565000,
+    "description": "This family house features a modern design and is equipped with all the necessary amenities for comfortable living. It consists of several spacious rooms that provide ample space for every family member. There is also a well-equipped kitchen with modern appliances, serving as a central area for cooking and family gatherings."
+  },
+  "sales": [
+    { "date": "2022-07-01", "value": 540000 },
+    { "date": "2023-02-15", "value": 560000 }
+  ]
+}
+
+### Get House By Id
+GET http://localhost:3000/api/house/6475a3c441e700b00013ca8e
+
+### Update House
+PATCH  http://localhost:3000/api/house/6475a3c441e700b00013ca8e
+Content-Type: application/json
+
+{
+  "adress": {
+    "country": "Italiano",
+    "state": "",
+    "city": "Prague",
+    "postal_code": "145 00",
+    "line": "Strizikova 309",
+    "coordinates": {
+      "lon": -122.4194,
+      "lat": 37.7749
+    }
+  },
+  "features": {
+    "garden": 120,
+    "garage": 20,
+    "pool": true,
+    "cooling": "Central",
+    "heating": "Gas",
+    "other": [{ "info": "Fireplace" }, { "info": "Security System" }]
+  },
+  "properties": {
+    "build_sqft": 200,
+    "year_built": "2005-06-15",
+    "total_sqft": 320,
+    "floors": 2,
+    "prices": [
+      {
+        "date": "2022-01-01",
+        "price": 500000
+      },
+      {
+        "date": "2022-03-15",
+        "price": 520000
+      },
+      {
+        "date": "2022-06-30",
+        "price": 550000
+      }
+    ]
+  },
+  "sales": [
+    { "date": "2022-07-01", "value": 540000 },
+    { "date": "2023-02-15", "value": 560000 }
+  ]
+}
+
+### Delete House
+DELETE   http://localhost:3000/api/house/6475a3c441e700b00013ca8e
+
+
+### Get All Offers
+GET   http://localhost:3000/api/offer
+
+### Create Offer
+POST   http://localhost:3000/api/offer
+Content-Type: application/json
+
+{
+  "houseId": "6475b28b9d791f727c563f06",
+  "userId": "someUserid",
+  "attributes": {
+    "date": "2023-03-27",
+    "value": 450000,
+  }
+}
+
+### Get One Offer
+GET   http://localhost:3000/api/offer/6475c74679168cd73a2649a0
+
+### Update Offer
+PATCH    http://localhost:3000/api/offer/6475c74679168cd73a2649a0
+Content-Type: application/json
+
+{
+  "value": 475000
+}
+
+### Delete Offer
+DELETE   http://localhost:3000/api/offer/6475c74679168cd73a2649a0
+
+
+
+
+
+### Get All Users
+GET   http://localhost:3000/api/user
+
+### Create a User
+POST   http://localhost:3000/api/user
+Content-Type: application/json
+
+{
+  "attributes": {
+    "email": "test.email@email.cz",
+    "pass": "someHASH",
+    "phone": "+420 123 456 789",
+    "name": {
+      "first_name": "Thomas",
+      "last_name": "Hornning"
+    }
+  },
+  "offers": [
+    {
+      "offerId": "fefaekn283h3f37g8fbw3"
+    },
+    {
+      "offerId": "n2b3f7bfj3bkjbbfjb23b"
+    },
+    {
+      "offerId": "n28b3f373gf03nnf3ff3f"
+    }
+  ],
+  "houses": [
+    {
+      "houseId": "ef83f92bb2ubg6v2c273b"
+    }
+  ],
+  "subscribes": [
+    {
+      "offerId": "nuf83bf2bfjbb3yb2f33f"
+    },
+    {
+      "offerId": "nuf83bf2bfjb24mffd33f"
+    }
+  ]
+}
+
+### Get One User
+GET   http://localhost:3000/api/user/6475dc773e0cf94e5752885b
+
+### Update a User
+PATCH   http://localhost:3000/api/user/6475dc773e0cf94e5752885b
+Content-Type: application/json
+
+{
+  "attributes": {
+    "email": "test.email@email.cz",
+    "pass": "someHASH",
+    "phone": "+420 123 456 789",
+    "name": {
+      "first_name": "Thomas",
+      "last_name": "Hornning"
+    }
+  },
+  "offers": [
+    {
+      "offerId": "n2b3f7bfj3bkjbbfjb23b"
+    },
+    {
+      "offerId": "n28b3f373gf03nnf3ff3f"
+    }
+  ],
+  "houses": [
+    {
+      "houseId": "ef83f92bb2ubg6v2c273b"
+    }
+  ],
+  "subscribes": [
+    {
+      "offerId": "nuf83bf2bfjbb3yb2f33f"
+    },
+    {
+      "offerId": "nuf83bf2bfjb24mffd33f"
+    }
+  ]
+}
+
+### Delete a User
+DELETE   http://localhost:3000/api/user/6475dc773e0cf94e5752885b
+
+### Api
+GET   http://localhost:3000/api
+

@@ -1,19 +1,19 @@
 const mongoose = require('mongoose')
-const House = require('../Models/House.model')
+const House = require('../../Models/House.model')
 const createError = require('http-errors')
-const errorHandler = require('./Errors.handler')
+const errorHandler = require('../Errors.handler')
 
 
 module.exports = {
     getAll: async (req, res, next) => {
         try {
-            const results = await House.find({}, {__v: 0 })
+            const results = await House.find({}, { __v: 0 })
             res.send(results)
         } catch (error) {
             console.log(error.message)
         }
     },
-    createHouse: async (req, res, next) => {
+    create: async (req, res, next) => {
         try {
             // console.log(req.body);
             const house = new House(req.body)
@@ -24,7 +24,7 @@ module.exports = {
             errorHandler.validation(error, next)
         }
     },
-    findOneHouse: async (req, res, next) => {
+    findOne: async (req, res, next) => {
         try {
             const id = req.params.id
             errorHandler.validId(id)
@@ -35,7 +35,7 @@ module.exports = {
             next(error)
         }
     },
-    updateHouse : async (req, res, next) => {
+    update: async (req, res, next) => {
         try {
             const id = req.params.id
             errorHandler.validId(id)
@@ -48,7 +48,7 @@ module.exports = {
             next(error)
         }
     },
-    deleteHouse : async (req, res, next) => {
+    delete: async (req, res, next) => {
         try {
             const id = req.params.id
             errorHandler.validId(id)

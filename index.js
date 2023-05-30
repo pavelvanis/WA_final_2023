@@ -1,6 +1,5 @@
 
 const express = require('express');
-const mongoose = require('mongoose');
 const createError = require('http-errors')
 
 const app = express();
@@ -20,13 +19,8 @@ app.listen(PORT, () => {
 // Initialize DB
 require('./initDB')()
 
-// - Products
-const productsRouter = require('./Routes/Product.route.js')
-app.use('/products', productsRouter)
-
-const houseRouter = require('./Routes/House.route.js')
-app.use('/house', houseRouter)
-
+// API endpoints
+require('./api')(app)
 
 // Not found pages
 app.use((req, res, next) => {

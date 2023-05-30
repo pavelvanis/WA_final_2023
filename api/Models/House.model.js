@@ -17,8 +17,8 @@ const HouseSchema = new Schema({
         }
     },
     features: {
-        garden: Number,
-        garage: Number,
+        garden: Boolean,
+        garage: Boolean,
         pool: Boolean,
         cooling: {
             type: String,
@@ -39,15 +39,15 @@ const HouseSchema = new Schema({
             type: Number,
             required: true
         },
-        total_sqft: {
-            type: Number,
-            required: true
-        },
         year_built: {
             type: Date,
             required: true
         },
         floors: {
+            type: Number,
+            required: true
+        },
+        rooms: {
             type: Number,
             required: true
         },
@@ -62,7 +62,27 @@ const HouseSchema = new Schema({
                     required: true
                 }
             }
+        ],
+        photos: [
+            {
+                name: {
+                    type: String,
+                    required: true
+                },
+                data: {
+                    type: Buffer,
+                    required: true
+                },
+                content_type: String
+            }
         ]
+    },
+    props: {
+        house_type: String,
+        status: String,
+        sqft: Number,
+        price: Number,
+        description: String
     },
     sales: [
         {
