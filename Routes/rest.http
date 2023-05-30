@@ -15,7 +15,7 @@ Content-Type: application/json
 GET http://localhost:3000/products/647453b38031d50d0b3b95df
 
 ### Bad request - Get product by id
-GET http://localhost:3000/products/6473514baad1f7b66fb6e8ff
+GET http://localhost:3000/products/6473514baad1f7b66fb6e8fe
 
 ### Update a product by id
 PATCH  http://localhost:3000/products/6473514baad1f7b66fb6e8fe
@@ -33,3 +33,113 @@ DELETE http://localhost:3000/products/6473514baad1f7b66fb6e8fe
 ### Bad request
 GET http://localhost:3000/bad_request
 
+
+
+### Get House
+GET http://localhost:3000/house
+
+### Create House
+POST http://localhost:3000/house
+Content-Type: application/json
+
+{
+  "adress": {
+    "country": "Czechia",
+    "state": "",
+    "city": "Prague",
+    "postal_code": "145 00",
+    "line": "Strizikova 309",
+    "coordinates": {
+      "lon": -122.4194,
+      "lat": 37.7749
+    }
+  },
+  "features": {
+    "garden": 120,
+    "garage": 20,
+    "pool": true,
+    "cooling": "Central",
+    "heating": "Gas",
+    "other": [{ "info": "Fireplace" }, { "info": "Security System" }]
+  },
+  "properties": {
+    "build_sqft": 200,
+    "year_built": "2005-06-15",
+    "total_sqft": 320,
+    "floors": 2,
+    "prices": [
+      {
+        "date": "2022-01-01",
+        "price": 500000
+      },
+      {
+        "date": "2022-03-15",
+        "price": 520000
+      },
+      {
+        "date": "2022-06-30",
+        "price": 550000
+      }
+    ]
+  },
+  "sales": [
+    { "date": "2022-07-01", "value": 540000 },
+    { "date": "2023-02-15", "value": 560000 }
+  ]
+}
+
+### Get House By Id
+GET http://localhost:3000/house/6475a3c441e700b00013ca8e
+
+### Update House
+PATCH  http://localhost:3000/house/6475a3c441e700b00013ca8e
+Content-Type: application/json
+
+{
+  "adress": {
+    "country": "Italiano",
+    "state": "",
+    "city": "Prague",
+    "postal_code": "145 00",
+    "line": "Strizikova 309",
+    "coordinates": {
+      "lon": -122.4194,
+      "lat": 37.7749
+    }
+  },
+  "features": {
+    "garden": 120,
+    "garage": 20,
+    "pool": true,
+    "cooling": "Central",
+    "heating": "Gas",
+    "other": [{ "info": "Fireplace" }, { "info": "Security System" }]
+  },
+  "properties": {
+    "build_sqft": 200,
+    "year_built": "2005-06-15",
+    "total_sqft": 320,
+    "floors": 2,
+    "prices": [
+      {
+        "date": "2022-01-01",
+        "price": 500000
+      },
+      {
+        "date": "2022-03-15",
+        "price": 520000
+      },
+      {
+        "date": "2022-06-30",
+        "price": 550000
+      }
+    ]
+  },
+  "sales": [
+    { "date": "2022-07-01", "value": 540000 },
+    { "date": "2023-02-15", "value": 560000 }
+  ]
+}
+
+### Delete House
+DELETE   http://localhost:3000/house/6475a3c441e700b00013ca8e

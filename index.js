@@ -10,7 +10,7 @@ require('dotenv').config();
 app.use(express.json())
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
     console.log(`\nServer is running at PORT ${PORT}`);
@@ -21,8 +21,11 @@ app.listen(PORT, () => {
 require('./initDB')()
 
 // - Products
-const productsRouter = require('./Routes/Product.route.js');
-app.use('/products', productsRouter);
+const productsRouter = require('./Routes/Product.route.js')
+app.use('/products', productsRouter)
+
+const houseRouter = require('./Routes/House.route.js')
+app.use('/house', houseRouter)
 
 
 // Not found pages

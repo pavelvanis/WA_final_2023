@@ -2,27 +2,7 @@
 const mongoose = require('mongoose')
 const createError = require('http-errors')
 const Product = require('../Models/Product.model')
-
-
-// Check if ID is valid
-function validId(id) {
-    if (!mongoose.Types.ObjectId.isValid(id)) 
-    throw createError(400, 'Invalid Product Id')
-}
-
-// Check if validation is ok
-function validation(error, next) {
-    if(error.name === 'ValidationError'){
-        next(createError(422, error.message))
-    }
-}
-
-// Check if item is exist
-function notFound(item, message) {
-    if (!item)
-        throw createError(404, message)
-}
-
+const errorHandler = require('./Errors.handler')
 
 module.exports = {
     // Returns list of all products
@@ -42,16 +22,16 @@ module.exports = {
             const result = await product.save()
             res.send(result)
         } catch (error) {
-            validation(error, next)
+            errorHandler.validation(error, next)
         }
     },
     // Return a product by id
     getOneProduct : async (req, res, next) => {
         try {
             const id = req.params.id
-            validId(id)
+            errorHandler.validId(id)
             const product = await Product.findById(id)
-            notFound(product, 'Product does not found.')
+            errorHandler.notFound(product, 'Product does not found.')
             res.send(product)
         } catch (error) {
             next(error)
@@ -61,11 +41,11 @@ module.exports = {
     updateProduct : async (req, res, next) => {
         try {
             const id = req.params.id
-            validId(id)
+            errorHandler.validId(id)
             const updates = req.body
             const options = { new: true }
             const result = await Product.findByIdAndUpdate(id, updates, options)
-            notFound(result, 'Product does not found')
+            errorHandler.notFound(result, 'Product does not found')
             res.send(result)
         } catch (error) {
             next(error)
@@ -75,9 +55,9 @@ module.exports = {
     deleteProduct : async (req, res, next) => {
         try {
             const id = req.params.id
-            validId(id)
+            errorHandler.validId(id)
             const result = await Product.findByIdAndDelete(id)
-            notFound(result, 'Product does not found')
+            errorHandler.notFound(result, 'Product does not found')
             res.send(result)
         } catch (error) {
             next(error)

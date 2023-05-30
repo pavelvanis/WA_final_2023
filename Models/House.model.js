@@ -2,44 +2,82 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const HouseSchema = new Schema({
-    "id": "string",
-    "location": {
-        "state": "string",
-        "city": "string",
-        "adressLine": "string",
-        "": ""
-    },
-    "sales": [
-        {
-            "date": "'05-01-2012'",
-            "value": "integer",
-            "currency": "'EUR'"
+    adress: {
+        country: {
+            type: String,
+            required: true
+        },
+        state: String,
+        city: String,
+        postal_code: String,
+        line: String,
+        coordinates: {
+            lon: Number,
+            lat: Number
         }
-    ],
-    "features": {
-        "cooling": {
-            "value": true,
-            "type": "'central'"
+    },
+    features: {
+        garden: Number,
+        garage: Number,
+        pool: Boolean,
+        cooling: {
+            type: String,
+            required: true
         },
-        "heating": {
-            "value": true,
-            "heatingType": "'Forced Air'"
+        heating: {
+            type: String,
+            required: true
         },
-        "floors": 2,
-        "garage": {
-            "value": true,
-            "squareFootage": 15
-        },
-        "pool": {
-            "value": true,
-            "squareFootage": 15
-        },
-        "other": [
-            "'gazebo'",
-            "grill"
+        other: [
+            {
+                info: String
+            }
         ]
-    }
-})
+    },
+    properties: {
+        build_sqft: {
+            type: Number,
+            required: true
+        },
+        total_sqft: {
+            type: Number,
+            required: true
+        },
+        year_built: {
+            type: Date,
+            required: true
+        },
+        floors: {
+            type: Number,
+            required: true
+        },
+        prices: [
+            {
+                date: {
+                    type: Date,
+                    required: true
+                },
+                price: {
+                    type: Number,
+                    required: true
+                }
+            }
+        ]
+    },
+    sales: [
+        {
+            date: {
+                type: Date,
+                default: Date.now(),
+                required: true
+            },
+            value: {
+                type: Number,
+                required: true
+            }
+        }
+    ]
+});
 
 const House = mongoose.model('house', HouseSchema)
 module.exports = House
