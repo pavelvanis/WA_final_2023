@@ -17,7 +17,7 @@ app.listen(PORT, () => {
 
 
 // Initialize DB
-require('./initDB')()
+require('./initDB')(app)
 
 // API endpoints
 require('./api')(app)

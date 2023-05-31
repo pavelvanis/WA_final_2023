@@ -116,7 +116,10 @@ Content-Type: application/json
 }
 
 ### Delete House
-DELETE   http://localhost:3000/api/house/6475a3c441e700b00013ca8e
+DELETE   http://localhost:3000/api/house/64770251a515197702cf0f1d
+
+
+
 
 
 ### Get All Offers
