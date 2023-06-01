@@ -158,7 +158,7 @@ DELETE   http://localhost:3000/api/offer/6475c74679168cd73a2649a0
 
 ### Get All Users
 GET   http://localhost:3000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDI3NzZ9.5V8pBu0nyAGZc3JWa_zn3xskf1pVe7cgud_-IWa5nIc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 
 ### Create a User
@@ -254,7 +254,7 @@ Content-Type: application/json
 {
     "email": "newEmail",
     "password": "hesloheslo",
-    "phone": "+420 123 456 789",
+    "phone": "+420 123 456 7",
     "name": {
       "first_name": "Thomas",
       "last_name": "Hornning"

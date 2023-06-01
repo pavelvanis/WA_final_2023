@@ -26,16 +26,22 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((err) => {
         console.log(err);
-        console.log(err);
       });
   };
 
-  const login = () => {
-    console.log("login");
+  const login = (data) => {
+    console.log(data);
+    axios 
+      .post('/login', {username: data.email || data.phone, password: data.password})
+      .then(res => {
+        console.log(res.data)
+        setCurrentUser({token: res.data.token, user: res.data.user})
+      })
+      .catch((err) => console.log(err))
   };
 
   const logout = () => {
-    console.log("logout");
+    setCurrentUser(null)
   };
 
   const methods = {
