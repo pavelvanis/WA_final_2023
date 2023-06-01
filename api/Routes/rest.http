@@ -158,45 +158,47 @@ DELETE   http://localhost:3000/api/offer/6475c74679168cd73a2649a0
 
 ### Get All Users
 GET   http://localhost:3000/api/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDI3NzZ9.5V8pBu0nyAGZc3JWa_zn3xskf1pVe7cgud_-IWa5nIc
+
 
 ### Create a User
 POST   http://localhost:3000/api/user
 Content-Type: application/json
 
 {
-  "attributes": {
     "email": "test.email@email.cz",
-    "pass": "someHASH",
+    "password": "someHASH",
     "phone": "+420 123 456 789",
     "name": {
       "first_name": "Thomas",
       "last_name": "Hornning"
-    }
-  },
-  "offers": [
-    {
-      "offerId": "fefaekn283h3f37g8fbw3"
     },
-    {
-      "offerId": "n2b3f7bfj3bkjbbfjb23b"
-    },
-    {
-      "offerId": "n28b3f373gf03nnf3ff3f"
-    }
-  ],
-  "houses": [
-    {
-      "houseId": "ef83f92bb2ubg6v2c273b"
-    }
-  ],
-  "subscribes": [
-    {
-      "offerId": "nuf83bf2bfjbb3yb2f33f"
-    },
-    {
-      "offerId": "nuf83bf2bfjb24mffd33f"
-    }
-  ]
+    "attributes": {
+      "offers": [
+        {
+          "offerId": "fefaekn283h3f37g8fbw3"
+        },
+        {
+          "offerId": "n2b3f7bfj3bkjbbfjb23b"
+        },
+        {
+          "offerId": "n28b3f373gf03nnf3ff3f"
+        }
+      ],
+      "houses": [
+        {
+          "houseId": "ef83f92bb2ubg6v2c273b"
+        }
+      ],
+      "subscribes": [
+        {
+          "offerId": "nuf83bf2bfjbb3yb2f33f"
+        },
+        { 
+        "offerId": "nuf83bf2bfjb24mffd33f"
+        }
+      ]
+  }
 }
 
 ### Get One User
@@ -245,3 +247,51 @@ DELETE   http://localhost:3000/api/user/6475dc773e0cf94e5752885b
 ### Api
 GET   http://localhost:3000/api
 
+### Signup a User
+POST   http://localhost:3000/signup
+Content-Type: application/json
+
+{
+    "email": "newEmail",
+    "password": "hesloheslo",
+    "phone": "+420 123 456 789",
+    "name": {
+      "first_name": "Thomas",
+      "last_name": "Hornning"
+    },
+    "attributes": {
+      "offers": [
+        {
+          "offerId": "fefaekn283h3f37g8fbw3"
+        },
+        {
+          "offerId": "n2b3f7bfj3bkjbbfjb23b"
+        },
+        {
+          "offerId": "n28b3f373gf03nnf3ff3f"
+        }
+      ],
+      "houses": [
+        {
+          "houseId": "ef83f92bb2ubg6v2c273b"
+        }
+      ],
+      "subscribes": [
+        {
+          "offerId": "nuf83bf2bfjbb3yb2f33f"
+        },
+        { 
+        "offerId": "nuf83bf2bfjb24mffd33f"
+        }
+      ]
+  }
+}
+
+### Login
+POST   http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "newEmail",
+  "password": "hesloheslo"
+}

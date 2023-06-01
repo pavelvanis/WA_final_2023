@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const User = require('../../Models/User.model')
 const errorHandler = require('../Errors.handler')
+const createError = require('http-errors')
+const bcrypt = require('bcrypt')
 
 module.exports = {
     getAll: async (req, res, next) => {
@@ -45,7 +47,7 @@ module.exports = {
             next(error)
         }
     },
-    delete:  async (req, res, next) => {
+    delete: async (req, res, next) => {
         try {
             const id = req.params.id
             errorHandler.validId(id)
