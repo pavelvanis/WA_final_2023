@@ -84,6 +84,10 @@ const HouseSchema = new Schema({
         price: Number,
         description: String
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     sales: [
         {
             date: {

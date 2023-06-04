@@ -1,6 +1,8 @@
 import { createBrowserRouter, Route } from "react-router-dom";
-import { useAuth } from "./hooks/UserAuth";
-import HomePage from "./pages/HomePage";
+import { useAuth } from "./hooks/useAuth";
+import MainLayout from "./Layout/MainLayout";
+import AccountPage from "./pages/AccountPage";
+import HomePage from "./pages/Home/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import WelcomePage from "./pages/WelcomePage";
 
@@ -14,6 +16,7 @@ const Login = ({ path, ...props }) => {
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <MainLayout/>,
     children: [
       {
         path: "/",
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <HomePage />,
+      },
+      {
+        path: "/account",
+        element: <AccountPage />,
       },
     ],
   },

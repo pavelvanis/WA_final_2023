@@ -1,6 +1,10 @@
-import React from "react";
-import AuthButtonsTest from "../__test__/AuthButtonsTest";
+import Navbar from "../components/Navbar";
+import HouseContainer from "./Home/HouseContainer";
 
 export default function WelcomePage() {
-  return <AuthButtonsTest />;
+  return (
+    <div>
+      Welcome
+    </div>
+  );
 }

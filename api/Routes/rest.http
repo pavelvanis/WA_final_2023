@@ -1,10 +1,12 @@
 
-### Get House
+### Get Houses
 GET http://localhost:3000/api/house
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 ### Create House
 POST http://localhost:3000/api/house
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 {
   "adress": {
@@ -56,6 +58,7 @@ Content-Type: application/json
     "price": 565000,
     "description": "This family house features a modern design and is equipped with all the necessary amenities for comfortable living. It consists of several spacious rooms that provide ample space for every family member. There is also a well-equipped kitchen with modern appliances, serving as a central area for cooking and family gatherings."
   },
+  "userId": "64784b8d0896db218376a6b3",
   "sales": [
     { "date": "2022-07-01", "value": 540000 },
     { "date": "2023-02-15", "value": 560000 }
@@ -124,6 +127,8 @@ DELETE   http://localhost:3000/api/house/64770251a515197702cf0f1d
 
 ### Get All Offers
 GET   http://localhost:3000/api/offer
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
+
 
 ### Create Offer
 POST   http://localhost:3000/api/offer

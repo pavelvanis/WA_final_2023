@@ -34,7 +34,7 @@ module.exports = {
             if (!check) throw createError(401, 'Bad password')
 
             res.send({
-                message: 'Successful login', token: token, user: {
+                message: 'Successful login', token: token, data: {
                     attributes: user.attributes,
                     email: user.email,
                     name: user.name,

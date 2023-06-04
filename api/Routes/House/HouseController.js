@@ -7,8 +7,21 @@ const errorHandler = require('../Errors.handler')
 module.exports = {
     getAll: async (req, res, next) => {
         try {
-            const results = await House.find({}, { __v: 0 })
-            res.send(results)
+            const housesWithUsers = await House.aggregate([
+                {
+                  $lookup: {
+                    from: 'users', // Název kolekce (tabulky) uživatelů
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                  }
+                }
+              ]);
+
+              console.log(housesWithUsers);
+              
+            // const results = await House.find({}, { __v: 0 })
+            res.send(housesWithUsers)
         } catch (error) {
             console.log(error.message)
         }
