@@ -29,13 +29,13 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
-  const login = (data) => {
+  const login = async (data) => {
     console.log(data);
     axios 
       .post('/login', {username: data.email || data.phone, password: data.password})
       .then(res => {
-        console.log(res.data)
         setCurrentUser({token: res.data.token, user: res.data.user})
+        return res
       })
       .catch((err) => console.log(err))
   };

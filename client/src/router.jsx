@@ -1,15 +1,17 @@
-import { createBrowserRouter, Route } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth";
-import {AccountPage, HomePage, WelcomePage, NotFoundPage} from './pages'
+import { createBrowserRouter, Navigate, Route } from "react-router-dom";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
+import { AccountPage, HomePage, WelcomePage, NotFoundPage } from "./pages";
 import MainLayout from "./Layout/MainLayout";
 
+function AuthenticatedRoute({ path, ...props }) {
+  const { currentUser } = useAuth;
 
-const login = false;
-
-const Login = ({ path, ...props }) => {
-  const { currentUser } = useAuth();
-  return currentUser ? <HomePage /> : <WelcomePage />;
-};
+  return currentUser ? (
+    <Route path="/" {...props} />
+  ) : (
+    <Navigate to="/welcome" />
+  );
+}
 
 const router = createBrowserRouter([
   {
@@ -18,21 +20,21 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Login path="/" element={<HomePage />} />,
-      },
-      {
-        path: "/welcome",
-        element: <WelcomePage />,
+        element: <AuthenticatedRoute element={<HomePage />} />,
       },
       {
         path: "/home",
-        element: <HomePage />,
+        element: <AuthenticatedRoute element={<HomePage />} />,
       },
       {
         path: "/account",
-        element: <AccountPage />,
+        element: <AuthenticatedRoute element={<AccountPage />} />,
       },
     ],
+  },
+  {
+    path: "/welcome",
+    element: <WelcomePage />,
   },
   {
     path: "*",
