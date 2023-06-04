@@ -11,45 +11,127 @@ export const houseProp = {
 
 export const userProps = {
   "message": "Successful login",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU4MTAzNjZ9.yAOm5Kkd_4rEpEL-_9v74kCjngiWHGd7JmRWcWkAyJg",
-  "data": {
-    "attributes": {
-      "offers": [
-        {
-          "offerId": "fefaekn283h3f37g8fbw3",
-          "_id": "647854ddf9ce814c1f9e3622"
-        },
-        {
-          "offerId": "n2b3f7bfj3bkjbbfjb23b",
-          "_id": "647854ddf9ce814c1f9e3623"
-        },
-        {
-          "offerId": "n28b3f373gf03nnf3ff3f",
-          "_id": "647854ddf9ce814c1f9e3624"
-        }
-      ],
-      "houses": [
-        {
-          "houseId": "ef83f92bb2ubg6v2c273b",
-          "_id": "647854ddf9ce814c1f9e3625"
-        }
-      ],
-      "subscribes": [
-        {
-          "offerId": "nuf83bf2bfjbb3yb2f33f",
-          "_id": "647854ddf9ce814c1f9e3626"
-        },
-        {
-          "offerId": "nuf83bf2bfjb24mffd33f",
-          "_id": "647854ddf9ce814c1f9e3627"
-        }
-      ]
-    },
-    "email": "newEmail",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibG9yZGtuZWRsaWsiLCJpYXQiOjE2ODU4ODY5MjR9.ROBAugK1mQa8uG46AhetoGY8HSFG3oj-Cpkj-gjlUIc",
+  "data":
+  {
+    "_id": "64784b8d0896db218376a6b3",
+    "email": "lordknedlik",
+    "password": "$2b$10$rRfFB1bRPukPg8cpigucBO4gdnE60bq4jvfVjvwQp4W7S.C/u1mVW",
+    "phone": "+420 123 456 789",
     "name": {
       "first_name": "Thomas",
       "last_name": "Hornning"
     },
-    "phone": "+420 123 456 7"
+    "attributes": {
+      "offers": [
+        {
+          "offerId": "647c8d39966d43f2af0e392b",
+          "_id": "647c8dd7966d43f2af0e392f"
+        }
+      ],
+      "houses": [
+        {
+          "houseId": "6479ea7f441d0774693e86ac",
+          "_id": "647c8dd7966d43f2af0e392e"
+        }
+      ],
+      "subscribes": [
+        {
+          "offerId": "647c8d39966d43f2af0e392b",
+          "_id": "647c8dd7966d43f2af0e392d"
+        }
+      ]
+    },
+    "__v": 0,
+    "houses": [
+      {
+        "_id": "6479ea7f441d0774693e86ac",
+        "adress": {
+          "country": "Czechia",
+          "state": "",
+          "city": "Prague",
+          "postal_code": "145 00",
+          "line": "Strizikova 309",
+          "coordinates": {
+            "lon": -122.4194,
+            "lat": 37.7749
+          }
+        },
+        "features": {
+          "garden": true,
+          "garage": true,
+          "pool": true,
+          "cooling": "Central",
+          "heating": "Gas",
+          "other": [
+            {
+              "info": "Fireplace",
+              "_id": "6479ea7f441d0774693e86ad"
+            },
+            {
+              "info": "Security System",
+              "_id": "6479ea7f441d0774693e86ae"
+            }
+          ]
+        },
+        "properties": {
+          "build_sqft": 200,
+          "year_built": "2005-06-15T00:00:00.000Z",
+          "floors": 2,
+          "rooms": 9,
+          "prices": [
+            {
+              "date": "2022-01-01T00:00:00.000Z",
+              "price": 500000,
+              "_id": "6479ea7f441d0774693e86af"
+            },
+            {
+              "date": "2022-03-15T00:00:00.000Z",
+              "price": 520000,
+              "_id": "6479ea7f441d0774693e86b0"
+            },
+            {
+              "date": "2022-06-30T00:00:00.000Z",
+              "price": 550000,
+              "_id": "6479ea7f441d0774693e86b1"
+            }
+          ],
+          "photos": []
+        },
+        "props": {
+          "house_type": "Single Family",
+          "status": "On Sold",
+          "sqft": 350,
+          "price": 565000,
+          "description": "This family house features a modern design and is equipped with all the necessary amenities for comfortable living. It consists of several spacious rooms that provide ample space for every family member. There is also a well-equipped kitchen with modern appliances, serving as a central area for cooking and family gatherings."
+        },
+        "userId": "64784b8d0896db218376a6b3",
+        "sales": [
+          {
+            "date": "2022-07-01T00:00:00.000Z",
+            "value": 540000,
+            "_id": "6479ea7f441d0774693e86b2"
+          },
+          {
+            "date": "2023-02-15T00:00:00.000Z",
+            "value": 560000,
+            "_id": "6479ea7f441d0774693e86b3"
+          }
+        ],
+        "__v": 0
+      }
+    ],
+    "offers": [
+      {
+        "_id": "647c8d39966d43f2af0e392b",
+        "houseId": "6479ea7f441d0774693e86ac",
+        "userId": "64784b8d0896db218376a6b3",
+        "attributes": {
+          "date": "2023-03-27T00:00:00.000Z",
+          "value": 450000
+        },
+        "__v": 0
+      }
+    ]
   }
 }

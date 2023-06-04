@@ -10,13 +10,15 @@ import {
   Collapse,
 } from "@chakra-ui/react";
 import { HamburgerIcon, SmallAddIcon, InfoIcon } from "@chakra-ui/icons";
+import { FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
     <header>
-      <Box bg="gray.800" p={4} color="white" position='relative'>
+      <Box bg="gray.800" p={4} color="white" position="relative">
         <Flex alignItems="center">
           <Link href="#" mr={4}>
             Logo
@@ -27,13 +29,13 @@ const Navbar = () => {
             alignItems="center"
             gap="1.5em"
           >
-            <Link href="#">Home</Link>
-            <Link href="#">Offers</Link>
+            <Link href="/home">Home</Link>
+            <Link href="/account">Profile</Link>
             <Button colorScheme="teal" paddingX={2}>
               <SmallAddIcon boxSize={7} />
               Add offer
             </Button>
-            <NavAvatar />
+            <LogOut />
           </Box>
           <Box display={{ base: "block", sm: "none" }}>
             <IconButton
@@ -81,5 +83,14 @@ function NavAvatar() {
         aria-label="Toggle Collapse"
       />
     </>
+  );
+}
+
+function LogOut() {
+  const { logout } = useAuth();
+  return (
+    <Button onClick={logout}>
+      <FaSignOutAlt />
+    </Button>
   );
 }

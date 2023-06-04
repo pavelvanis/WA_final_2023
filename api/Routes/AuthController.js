@@ -53,13 +53,13 @@ module.exports = {
                 },
             ]);
 
-            console.log(userData);
+            console.log(userData[0]);
 
             const token = await jwt.sign({ name: user.email }, process.env.SECRET_KEY)
             if (!check) throw createError(401, 'Bad password')
 
             res.send({
-                message: 'Successful login', token: token, user: userData
+                message: 'Successful login', token: token, data: userData
             })
         } catch (error) {
             console.log(error);

@@ -1,79 +1,30 @@
 import { useAuth } from "../hooks/useAuth";
 import {
+  Image,
   Box,
+  LinkBox,
+  LinkOverlay,
   Text,
   Divider,
   Card,
   CardHeader,
   CardBody,
   Flex,
+  Stat,
+  StatLabel,
+  StatHelpText,
+  StatNumber,
 } from "@chakra-ui/react";
 
 import { userProps } from "../__test__/const";
-
-// Test data
-const offers = [
-  {
-    name: "offer-1",
-  },
-  {
-    name: "offer-2",
-  },
-  {
-    name: "offer-3",
-  },
-  {
-    name: "offer-4",
-  },
-  {
-    name: "offer-5",
-  },
-  {
-    name: "offer-6",
-  },
-  {
-    name: "offer-7",
-  },
-  {
-    name: "offer-8",
-  },
-  {
-    name: "offer-9",
-  },
-];
-const subs = [
-  {
-    name: "sub-1",
-  },
-  {
-    name: "sub-2",
-  },
-  {
-    name: "sub-3",
-  },
-  {
-    name: "sub-4",
-  },
-  {
-    name: "sub-5",
-  },
-  {
-    name: "sub-6",
-  },
-  {
-    name: "sub-7",
-  },
-  {
-    name: "sub-8",
-  },
-  {
-    name: "sub-9",
-  },
-];
+import location from "../assets/location.svg";
+import country from "../assets/flag.svg";
 
 export default function AccountPage() {
   const { currentUser } = useAuth();
-  console.log(userProps);
+  const user = userProps;
+
+  console.log(user);
   return (
     <Box
       backgroundColor="gray.100"
@@ -82,17 +33,16 @@ export default function AccountPage() {
       borderColor="gray.400"
       padding="1em"
     >
-      <User />
+      <User user={user.data} />
       <Box mt={4}>
-        <UserBox title="my offers" items={offers} />
-        <UserBox title="my subscribes" items={subs} />
-        <UserBox title="my buys" items={subs} />
+        <UserBox title="my offers" type="offers" items={user.data.offers} />
+        <UserBox title="my houses" type="houses" items={user.data.houses} />
       </Box>
     </Box>
   );
 }
 
-function User() {
+function User({ user }) {
   return (
     <Box>
       <Box
@@ -106,15 +56,15 @@ function User() {
           gap: { base: "1.5em", sm: ".8em" },
         }}
       >
-        <UserName />
-        <UserInfo />
+        <UserName name={user.name} />
+        <UserInfo user={user} />
       </Box>
       <Divider borderColor="gray.400" />
     </Box>
   );
 }
 
-function UserName() {
+function UserName({ name }) {
   return (
     <Box
       display="flex"
@@ -125,28 +75,11 @@ function UserName() {
       }}
     >
       <Text as="b" fontSize="3xl">
-        {userProps.data.name.first_name}
+        {name.first_name}
       </Text>
       <Text as="b" fontSize="3xl">
-        {userProps.data.name.last_name}
+        {name.last_name}
       </Text>
-    </Box>
-  );
-}
-
-function UserInfo() {
-  return (
-    <Box
-      display="flex"
-      sx={{
-        flexDirection: { base: "column", sm: "row" },
-        alignItems: { base: "start", sm: "center" },
-        gap: { base: ".2em", sm: "2em" },
-        mr: { md: "1em" },
-      }}
-    >
-      <UserColumn title="Phone" info={userProps.data.phone} />
-      <UserColumn title="Email" info={userProps.data.email} />
     </Box>
   );
 }
@@ -160,7 +93,24 @@ function UserColumn({ title, info }) {
   );
 }
 
-function UserBox({ title, items }) {
+function UserInfo({ user }) {
+  return (
+    <Box
+      display="flex"
+      sx={{
+        flexDirection: { base: "column", sm: "row" },
+        alignItems: { base: "start", sm: "center" },
+        gap: { base: ".2em", sm: "2em" },
+        mr: { md: "1em" },
+      }}
+    >
+      <UserColumn title="Phone" info={user.phone} />
+      <UserColumn title="Email" info={user.email} />
+    </Box>
+  );
+}
+
+function UserBox({ title, items, type }) {
   return (
     <Box sx={{ p: { base: ".5em", sm: ".7em", md: "1em" } }}>
       <Text textTransform="capitalize" fontWeight={600} fontSize="xl">
@@ -169,7 +119,16 @@ function UserBox({ title, items }) {
       <Box overflowX="auto">
         <Flex gap="4" p="4">
           {items.map((item) => {
-            return <Offer key={item.name} offer={item}></Offer>;
+            switch (type) {
+              case "offers":
+                return <Offer key={item["_id"]} offer={item}></Offer>;
+
+              case "houses":
+                return <House key={item["_id"]} house={item}></House>;
+
+              case "subs":
+                return <Sub key={item["_id"]} sub={item}></Sub>;
+            }
           })}
         </Flex>
       </Box>
@@ -178,14 +137,71 @@ function UserBox({ title, items }) {
 }
 
 function Offer({ offer }) {
+  const formattedValue = offer.attributes.value.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const dateString = offer.attributes.date;
+  const date = new Date(dateString);
+  const formattedDate = date.toLocaleDateString("cs-CZ", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
   return (
-    <Card as='div' minWidth={180}>
-      <CardHeader>
-        <Text size="md">{offer.name}</Text>
-      </CardHeader>
-      <CardBody>
-        <Text>View a summary of all your customers over the last month.</Text>
-      </CardBody>
-    </Card>
+    <LinkBox as="article">
+      <LinkOverlay href={`/offer/${offer['_id']}`}>
+        <Card minWidth={180}>
+          <CardHeader sx={{ p: { base: ".5em", sm: "1em" } }} pb={0}>
+            <Image rounded={5} src="https://via.placeholder.com/300x150" />
+          </CardHeader>
+          <CardBody sx={{ p: { base: ".5em", sm: "1em" } }}>
+            <Stat>
+              <StatLabel>
+                <Box display="flex" alignItems="center" gap=".4em">
+                  <Image boxSize="1em" src={location} />
+                  <Text>Praha 1</Text>
+                </Box>
+              </StatLabel>
+              <StatNumber mt={1}>€{formattedValue}</StatNumber>
+              <StatHelpText mt={2}>{formattedDate}</StatHelpText>
+            </Stat>
+          </CardBody>
+        </Card>
+      </LinkOverlay>
+    </LinkBox>
   );
 }
+
+function House({ house }) {
+  const area = `${house.props.sqft} m²`;
+  return (
+    <LinkBox as="article">
+      <LinkOverlay href={`/house/${house["_id"]}`}>
+        <Card minWidth={180}>
+          <CardHeader sx={{ p: { base: ".5em", sm: "1em" } }}>
+            <Image rounded={5} src="https://via.placeholder.com/300x150" />
+          </CardHeader>
+          <CardBody sx={{ p: { base: ".5em", sm: "1em" } }}>
+            <Stat>
+              <StatLabel display="flex" justifyContent="start" gap="1.3em">
+                <Box display="flex" alignItems="center" gap=".4em">
+                  <Image boxSize="1em" src={country} />
+                  <Text>{house.adress.country}</Text>
+                </Box>
+                <Box display="flex" alignItems="center" gap=".4em">
+                  <Image boxSize="1em" src={location} />
+                  <Text>{house.adress.city}</Text>
+                </Box>
+              </StatLabel>
+              <StatNumber mt={1}>{house.props.house_type}</StatNumber>
+              <StatHelpText mt={2}>{area}</StatHelpText>
+            </Stat>
+          </CardBody>
+        </Card>
+      </LinkOverlay>
+    </LinkBox>
+  );
+}
+
+function Sub({ sub }) {}

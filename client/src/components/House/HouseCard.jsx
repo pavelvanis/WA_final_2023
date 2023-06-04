@@ -6,9 +6,6 @@ import { StarIcon } from "@chakra-ui/icons";
 import { houseProp } from "../../__test__/const";
 
 export default function HouseBox() {
-
-    
-
   return (
     <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <Image src={houseProp.imageUrl} alt={houseProp.imageAlt} />
