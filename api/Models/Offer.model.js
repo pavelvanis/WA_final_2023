@@ -3,12 +3,12 @@ const Schema = mongoose.Schema
 
 const OfferSchema = new Schema({
     houseId: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'House'
     },
     userId: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     attributes: {
         date: {

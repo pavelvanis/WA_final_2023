@@ -28,28 +28,28 @@ const UserSchema = new Schema({
         offers: [
             {
                 offerId: {
-                    type: String,
-                    required: true
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Offer'
                 },
             }
         ],
         houses: [
             {
                 houseId: {
-                    type: String,
-                    required: true
-                }
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'House'
+                },
             }
         ],
         subscribes: [
             {
                 offerId: {
-                    type: String,
-                    required: true
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Offer'
                 }
             }
         ]
-    },
+    }
 
 })
 

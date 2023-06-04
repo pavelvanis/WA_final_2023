@@ -3,6 +3,7 @@ const createError = require('http-errors')
 const errorHandler = require('./Errors.handler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const axios = require('axios')
 
 
 module.exports = {
@@ -30,16 +31,35 @@ module.exports = {
             const user = await User.findOne({ $or: [{ email: username }, { phone: username }] })
             const check = await bcrypt.compare(password, user.password)
 
+            console.log(user['_id']);
+            
+            const userData = await User.aggregate([
+                { $match: { _id: user['_id'] } },
+                {
+                    $lookup: {
+                        from: 'houses',
+                        localField: 'attributes.houses.houseId',
+                        foreignField: '_id',
+                        as: 'houses',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'offers',
+                        localField: 'attributes.offers.offerId',
+                        foreignField: '_id',
+                        as: 'offers',
+                    },
+                },
+            ]);
+
+            console.log(userData);
+
             const token = await jwt.sign({ name: user.email }, process.env.SECRET_KEY)
             if (!check) throw createError(401, 'Bad password')
 
             res.send({
-                message: 'Successful login', token: token, data: {
-                    attributes: user.attributes,
-                    email: user.email,
-                    name: user.name,
-                    phone: user.phone
-                }
+                message: 'Successful login', token: token, user: userData
             })
         } catch (error) {
             console.log(error);

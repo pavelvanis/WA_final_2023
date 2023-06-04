@@ -168,8 +168,8 @@ function UserBox({ title, items }) {
       </Text>
       <Box overflowX="auto">
         <Flex gap="4" p="4">
-          {items.map((offer) => {
-            return <Offer offer={offer}></Offer>;
+          {items.map((item) => {
+            return <Offer key={item.name} offer={item}></Offer>;
           })}
         </Flex>
       </Box>
