@@ -6,12 +6,9 @@ import {
   Badge,
   LinkBox,
   LinkOverlay,
-  Text,
-  Container,
 } from "@chakra-ui/react";
 import { useLoadOffers } from "../hooks/";
 import { houseProp } from "../__test__/const";
-import { StarIcon } from "@chakra-ui/icons";
 
 export default function HomePage() {
   return (
@@ -26,7 +23,7 @@ function HouseContainer() {
   const load = useRef(false);
 
   useEffect(() => {
-    console.log(offers);
+    // console.log(offers);
   }, [offers]);
 
   return (

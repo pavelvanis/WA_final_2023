@@ -2,9 +2,29 @@ import { Box, Button, Image, Text, Container, Heading } from "@chakra-ui/react";
 
 import logo from "../assets/logo.svg";
 import background01 from "../assets/estate-background-04.jpeg";
+import { LoginModal, RegisterModal } from "../components";
+import { useState } from "react";
 
 export default function WelcomePage() {
-  console.log("welcome");
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isRegisterOpen, setRegisterOpen] = useState(false);
+
+  const openLoginModal = () => {
+    setLoginOpen(true);
+  };
+
+  const closeLoginModal = () => {
+    setLoginOpen(false);
+  };
+
+  const openRegisterModal = () => {
+    setRegisterOpen(true);
+  };
+
+  const closeRegisterModal = () => {
+    setRegisterOpen(false);
+  };
+
   return (
     <Box
       color="black"
@@ -40,10 +60,11 @@ export default function WelcomePage() {
             House Estate
           </Text>
         </Box>
-        <Button size="sm">Sign in</Button>
+        <LoginBtn onClick={openLoginModal} />
+        <LoginModal isOpen={isLoginOpen} onClose={closeLoginModal} openRegister={openRegisterModal}/>
       </Box>
-      <Container mt="2em" fontSize="1.4rem">
-        <Heading sx={{ fontSize: { base: "6xl", md: "8xl" } }} mb={9}>
+      <Container mt="2.4em" fontSize="1.4rem">
+        <Heading sx={{ fontSize: { base: "6xl", md: "8xl" } }} mb=".7em">
           Welcome to our real estate platform!{" "}
         </Heading>
         <Text fontWeight="semibold" fontSize="2xl">
@@ -55,10 +76,25 @@ export default function WelcomePage() {
           Whether you are looking for a new home or want to showcase your
           property for sale or rent, this is the place to be.
         </Text>
-        <Button colorScheme="blackAlpha" size="md" mt={8}>
-          Register
-        </Button>
+        <RegisterBtn onClick={openRegisterModal} />
+        <RegisterModal isOpen={isRegisterOpen} onClose={closeRegisterModal} openLogin={openLoginModal} />
       </Container>
     </Box>
+  );
+}
+
+function LoginBtn({ onClick }) {
+  return (
+    <Button onClick={onClick} size="sm">
+      Sign In
+    </Button>
+  );
+}
+
+function RegisterBtn({ onClick }) {
+  return (
+    <Button mt={7} size="md" colorScheme="blackAlpha" onClick={onClick}>
+      Sign Up
+    </Button>
   );
 }

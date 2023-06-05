@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 // Auth context
 const AuthContext = createContext("null");
@@ -11,38 +11,57 @@ export const useAuth = () => {
 
 // Auth Provider
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(loadSession());
+  const load = useRef(false);
 
   useEffect(() => {
-    return () => console.log(currentUser);
+    // console.log("user changed");
+    // console.log(loadSession());
   }, [currentUser]);
 
-  const signup = (userData) => {
-    const json = JSON.stringify(userData)
-    axios
-      .post("/signup", userData)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  useEffect(() => {
+    if (load.current) {
+      // setCurrentUser(loadSession());
+      // console.log(loadSession());
+      // console.log("session restarted");
+    }
+    return () => (load.current = true);
+  }, []);
+
+  const signup = async (userData) => {
+    try {
+      const response = await axios.post("/signup", userData);
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
   const login = async (data) => {
-    console.log(data);
-    axios 
-      .post('/login', {username: data.email || data.phone, password: data.password})
-      .then(res => {
-        setCurrentUser({token: res.data.token, user: res.data.user})
-        return res
-      })
-      .catch((err) => console.log(err))
+    try {
+      const response = await axios.post("/login", {
+        username: data.username,
+        password: data.password,
+      });
+      const result = {
+        token: response.data.token,
+        user: response.data.data[0],
+      };
+      setCurrentUser(result);
+      saveSession(result);
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
   const logout = () => {
     // console.log('logout');
-    setCurrentUser(null)
+    setCurrentUser(null);
+    sessionStorage.setItem("user", null);
   };
 
   const methods = {
@@ -56,3 +75,15 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={methods}>{children}</AuthContext.Provider>
   );
 };
+
+function saveSession(user) {
+  if (!user) return;
+  const json = JSON.stringify(user);
+  sessionStorage.setItem("user", json);
+}
+
+function loadSession() {
+  let data = sessionStorage.getItem("user");
+  if (data) data = JSON.parse(data);
+  return data;
+}

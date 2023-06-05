@@ -3,16 +3,6 @@ import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { AccountPage, HomePage, WelcomePage, NotFoundPage } from "./pages";
 import MainLayout from "./Layout/MainLayout";
 
-function AuthenticatedRoute({ path, ...props }) {
-  const { currentUser } = useAuth;
-
-  return currentUser ? (
-    <Route path="/" {...props} />
-  ) : (
-    <Navigate to="/welcome" />
-  );
-}
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,15 +10,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <AuthenticatedRoute element={<HomePage />} />,
+        element: <HomePage />,
       },
       {
         path: "/home",
-        element: <AuthenticatedRoute element={<HomePage />} />,
+        element: <HomePage />,
       },
       {
         path: "/account",
-        element: <AuthenticatedRoute element={<AccountPage />} />,
+        element: <AccountPage />,
       },
     ],
   },

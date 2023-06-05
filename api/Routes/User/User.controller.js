@@ -28,7 +28,6 @@ module.exports = {
         try {
             const id = req.params.id
             errorHandler.validId(id)
-            // const user = await User.findById(id)
 
             const user = await User.aggregate([
                 { $match: { _id: new mongoose.Types.ObjectId(id) } },

@@ -14,15 +14,13 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    name: {
-        first_name: {
-            type: String,
-            required: true
-        },
-        last_name: {
-            type: String,
-            required: true
-        }
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
     },
     attributes: {
         offers: [
