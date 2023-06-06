@@ -13,7 +13,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { CloseIcon, CheckIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
@@ -28,35 +28,34 @@ export default function LoginModal({ isOpen, onClose, openRegister }) {
     badlogin: false,
   });
 
-//   Checks form inputs
+  //   Checks form inputs
   function validForm() {
     setError({
       ...error,
       username: user.username ? false : true,
       password: user.password ? false : true,
     });
-    console.log(error);
     if (!user.username || !user.password) return false;
     return true;
   }
 
-//   Handle submit
+  //   Handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (!validForm()) return;
-      const login = await login(user);
-      console.log(login);
-      if (login.status === 200) {
+      const res = await login(user);
+      // console.log(res);
+      if (res.status === 200) {
         navigate("/home");
       }
     } catch (err) {
       setError({ ...error, badlogin: true });
-      console.log(err);
+      // console.log(err);
     }
   };
 
-//   Handle closing modal
+  //   Handle closing modal
   const handleClose = (e) => {
     setError({
       username: false,
@@ -66,12 +65,12 @@ export default function LoginModal({ isOpen, onClose, openRegister }) {
     onClose();
   };
 
-//   Opens Registration modal
+  //   Opens Registration modal
   const goToRegister = (e) => {
-    e.preventDefault()
-    handleClose()
-    openRegister()
-  }
+    e.preventDefault();
+    handleClose();
+    openRegister();
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -113,7 +112,6 @@ export default function LoginModal({ isOpen, onClose, openRegister }) {
 
 function LoginForm({ user, error }) {
   const handleChange = (e) => {
-    console.log(error.state[e.target.name]);
     error.setError({ ...error.state, [e.target.name]: false });
     user.setUser({
       ...user.user,

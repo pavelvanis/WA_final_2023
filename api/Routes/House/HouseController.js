@@ -28,13 +28,15 @@ module.exports = {
     },
     create: async (req, res, next) => {
         try {
-            // console.log(req.body);
+            console.log('create a house');
+            console.log(req.body);
             const house = new House(req.body)
             const result = await house.save()
             console.log(result);
             res.send(result)
         } catch (error) {
             errorHandler.validation(error, next)
+            console.log(error);
         }
     },
     findOne: async (req, res, next) => {

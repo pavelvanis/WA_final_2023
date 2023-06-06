@@ -12,6 +12,7 @@ import {
 import { HamburgerIcon, SmallAddIcon, InfoIcon } from "@chakra-ui/icons";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth";
+import CreateOfferModal from "./CreateOfferModal";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -31,10 +32,7 @@ const Navbar = () => {
           >
             <Link href="/home">Home</Link>
             <Link href="/account">Profile</Link>
-            <Button colorScheme="teal" paddingX={2}>
-              <SmallAddIcon boxSize={7} />
-              Add offer
-            </Button>
+            <AddOfferBtn />
             <LogOut />
           </Box>
           <Box display={{ base: "block", sm: "none" }}>
@@ -69,28 +67,25 @@ const Navbar = () => {
 
 export default Navbar;
 
-function NavLink() {}
-
-function NavAvatar() {
-  const { isOpen, onToggle } = useDisclosure();
-
-  return (
-    <>
-      <IconButton
-        icon={<InfoIcon boxSize={9} />}
-        rounded="100%"
-        onClick={onToggle}
-        aria-label="Toggle Collapse"
-      />
-    </>
-  );
-}
-
 function LogOut() {
   const { logout } = useAuth();
   return (
     <Button onClick={logout}>
       <FaSignOutAlt />
     </Button>
+  );
+}
+
+function AddOfferBtn() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <Button colorScheme="teal" paddingX={2} onClick={onOpen}>
+        <SmallAddIcon boxSize={7} />
+        Add offer
+      </Button>
+      <CreateOfferModal isOpen={isOpen} onClose={onClose} />
+    </>
   );
 }

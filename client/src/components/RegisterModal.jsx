@@ -32,7 +32,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function RegisterModal({ isOpen, onClose, openLogin }) {
   const { signup, login } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     email: null,
@@ -78,9 +78,12 @@ export default function RegisterModal({ isOpen, onClose, openLogin }) {
     try {
       if (!validForm()) return;
       const res1 = await signup(user);
-    //   console.log(res1);
-      const res2 = await login({username: user.email, password: user.password});
-    //   console.log(res2);
+      //   console.log(res1);
+      const res2 = await login({
+        username: user.email,
+        password: user.password,
+      });
+      //   console.log(res2);
       if (res2.status === 200) {
         navigate("/home");
       }
@@ -92,7 +95,7 @@ export default function RegisterModal({ isOpen, onClose, openLogin }) {
           message: error.response.data.error.message,
         },
       });
-    //   console.log(error);
+      //   console.log(error);
     }
   };
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const HouseSchema = new Schema({
-    adress: {
+    address: {
         country: {
             type: String,
             required: true
@@ -10,7 +10,10 @@ const HouseSchema = new Schema({
         state: String,
         city: String,
         postal_code: String,
-        line: String,
+        line: {
+            type: String,
+            required: true
+        },
         coordinates: {
             lon: Number,
             lat: Number
@@ -20,14 +23,8 @@ const HouseSchema = new Schema({
         garden: Boolean,
         garage: Boolean,
         pool: Boolean,
-        cooling: {
-            type: String,
-            required: true
-        },
-        heating: {
-            type: String,
-            required: true
-        },
+        cooling: String,
+        heating: String,
         other: [
             {
                 info: String
@@ -35,22 +32,10 @@ const HouseSchema = new Schema({
         ]
     },
     properties: {
-        build_sqft: {
-            type: Number,
-            required: true
-        },
-        year_built: {
-            type: Date,
-            required: true
-        },
-        floors: {
-            type: Number,
-            required: true
-        },
-        rooms: {
-            type: Number,
-            required: true
-        },
+        build_sqft: Number,
+        year_built: Date,
+        floors: Number,
+        rooms: Number,
         prices: [
             {
                 date: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Wrap,
   Box,
@@ -6,6 +6,7 @@ import {
   Badge,
   LinkBox,
   LinkOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useLoadOffers } from "../hooks/";
 import { houseProp } from "../__test__/const";
@@ -19,19 +20,26 @@ export default function HomePage() {
 }
 
 function HouseContainer() {
-  const [offers, setOffers] = useLoadOffers();
+  const offers = useLoadOffers();
   const load = useRef(false);
+  const [ok, setOk] = useState(false);
 
   useEffect(() => {
-    // console.log(offers);
+    if (offers) {
+      setOk(true);
+    }
   }, [offers]);
+
+  if (!ok) {
+    return null; // nebo jiný loading stav
+  }
 
   return (
     <Wrap spacingY="3em" spacingX="2em" justify="space-evenly">
-      {offers &&
-        offers.map((offer) => {
-          return <MyCard key={offer["_id"]} data={offer} />;
-        })}
+      {offers.map((offer) => {
+        console.log("object");
+        return <MyCard key={offer["_id"]} data={offer} />;
+      })}
     </Wrap>
   );
 }
@@ -41,6 +49,7 @@ function MyCard({ data }) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  console.log(data.house[0].address);
   return (
     <LinkBox>
       <LinkOverlay href="/#">
@@ -60,8 +69,7 @@ function MyCard({ data }) {
                 textTransform="uppercase"
                 ml="2"
               >
-                {data.house[0].adress.country} &bull;{" "}
-                {data.house[0].adress.city}
+                {data ? "fef" : "fefe"}
               </Box>
             </Box>
 
