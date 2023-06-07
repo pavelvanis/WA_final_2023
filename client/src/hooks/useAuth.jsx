@@ -19,11 +19,23 @@ export const AuthProvider = ({ children }) => {
     // console.log(loadSession());
   }, [currentUser]);
 
+  const updateUser = async () => {
+    try {
+      const update = await axios.get(`/api/user/${currentUser.user["_id"]}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
+      console.log(update);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    if (load.current) {
-      // setCurrentUser(loadSession());
-      // console.log(loadSession());
-      // console.log("session restarted");
+    if (load.current && currentUser) {
+      console.log('update');
+      updateUser();
     }
     return () => (load.current = true);
   }, []);
@@ -31,10 +43,10 @@ export const AuthProvider = ({ children }) => {
   const signup = async (userData) => {
     try {
       const response = await axios.post("/signup", userData);
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       throw error;
     }
   };

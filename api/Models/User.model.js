@@ -11,7 +11,7 @@ const UserSchema = new Schema({
         required: true
     },
     phone: {
-        type: String,
+        type: Number,
         required: true
     },
     first_name: {
@@ -48,7 +48,6 @@ const UserSchema = new Schema({
             }
         ]
     }
-
 })
 
 const User = mongoose.model('user', UserSchema)

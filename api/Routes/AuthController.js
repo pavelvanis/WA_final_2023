@@ -9,6 +9,7 @@ const axios = require('axios')
 module.exports = {
     signup: async (req, res, next) => {
         try {
+            console.log(req.body);
             const _email = await User.findOne({ email: req.body.email })
             if (_email) throw createError(409, 'User with this email already exist', { reason: 'email' })
             const _phone = await User.findOne({ phone: req.body.phone })
@@ -21,18 +22,18 @@ module.exports = {
         } catch (error) {
             console.log(error);
             errorHandler.validation(error, next)
-            next(error)
         }
     },
     login: async (req, res, next) => {
         const username = req.body.username
         const password = req.body.password
         try {
-            const user = await User.findOne({ $or: [{ email: username }, { phone: username }] })
+            console.log(req.body);
+            const user = await User.findOne({ email: username })
             const check = await bcrypt.compare(password, user.password)
 
             console.log(user['_id']);
-            
+
             const userData = await User.aggregate([
                 { $match: { _id: user['_id'] } },
                 {

@@ -7,9 +7,8 @@ export default function useLoadOffers(initialValue) {
 
   const [value, setValue] = useState(initialValue);
 
-  let isLoaded = false
-
   const load = useRef(false);
+
 
   const loadOffers = async () => {
     try {
@@ -19,9 +18,6 @@ export default function useLoadOffers(initialValue) {
         },
       });
       setValue(offers.data)
-      isLoaded = true
-      console.log(offers);
-      console.log(isLoaded);
     } catch (error) {
         console.log(error);
     }

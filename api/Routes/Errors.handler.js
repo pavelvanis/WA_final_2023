@@ -10,6 +10,7 @@ module.exports = {
         if(error.name === 'ValidationError'){
             next(createError(422, error.message))
         }
+        next(error)
     },
     notFound : (item, message) => {
         if (!item)

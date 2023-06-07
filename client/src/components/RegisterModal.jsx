@@ -23,6 +23,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  NumberInput,
+  NumberInputField,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useAuth } from "../hooks/useAuth";
@@ -77,8 +79,9 @@ export default function RegisterModal({ isOpen, onClose, openLogin }) {
     e.preventDefault();
     try {
       if (!validForm()) return;
+      // console.log(user);
       const res1 = await signup(user);
-      //   console.log(res1);
+      // console.log(res1);
       const res2 = await login({
         username: user.email,
         password: user.password,
@@ -88,14 +91,16 @@ export default function RegisterModal({ isOpen, onClose, openLogin }) {
         navigate("/home");
       }
     } catch (error) {
-      setError({
-        ...error,
-        anotherError: {
-          status: true,
-          message: error.response.data.error.message,
-        },
-      });
-      //   console.log(error);
+      if (error.response.status == 409) {
+        setError({
+          ...error,
+          anotherError: {
+            status: true,
+            message: "User with this email or phone already exists",
+          },
+        });
+      }
+      // console.log(error);
     }
   };
 
@@ -203,17 +208,14 @@ function LoginForm({ user, error }) {
         </FormControl>
 
         <FormControl isInvalid={error.state.phone}>
-          <InputGroup mt={6}>
-            <InputLeftElement pointerEvents="none">
-              <PhoneIcon color="gray.300" />
-            </InputLeftElement>
-            <Input
+          <NumberInput mt={6}>
+            <NumberInputField
               placeholder="Phone number"
               type="tel"
               name="phone"
               onChange={handleChange}
             />
-          </InputGroup>
+          </NumberInput>
           <FormErrorMessage>Phone number is required.</FormErrorMessage>
         </FormControl>
 

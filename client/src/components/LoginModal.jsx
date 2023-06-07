@@ -44,6 +44,7 @@ export default function LoginModal({ isOpen, onClose, openRegister }) {
     e.preventDefault();
     try {
       if (!validForm()) return;
+      // console.log(user);
       const res = await login(user);
       // console.log(res);
       if (res.status === 200) {
@@ -124,7 +125,7 @@ function LoginForm({ user, error }) {
       <FormControl isInvalid={error.state.badlogin}>
         <FormControl isInvalid={error.state.username}>
           <Input
-            placeholder="Email or phone"
+            placeholder="Email"
             name="username"
             onChange={handleChange}
           />

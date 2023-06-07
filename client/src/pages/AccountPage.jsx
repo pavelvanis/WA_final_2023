@@ -148,19 +148,24 @@ function Offer({ offer }) {
     month: "2-digit",
     year: "numeric",
   });
+  console.log(offer);
   return (
     <LinkBox as="article">
-      <LinkOverlay href={`/offer/${offer['_id']}`}>
+      <LinkOverlay href={`/offer/${offer["_id"]}`}>
         <Card minWidth={180}>
           <CardHeader sx={{ p: { base: ".5em", sm: "1em" } }} pb={0}>
             <Image rounded={5} src="https://via.placeholder.com/300x150" />
           </CardHeader>
           <CardBody sx={{ p: { base: ".5em", sm: "1em" } }}>
             <Stat>
-              <StatLabel>
+              <StatLabel display="flex" justifyContent="start" gap="1.3em">
+                <Box display="flex" alignItems="center" gap=".4em">
+                  <Image boxSize="1em" src={country} />
+                  <Text>{}</Text>
+                </Box>
                 <Box display="flex" alignItems="center" gap=".4em">
                   <Image boxSize="1em" src={location} />
-                  <Text>Praha 1</Text>
+                  <Text>{}</Text>
                 </Box>
               </StatLabel>
               <StatNumber mt={1}>€{formattedValue}</StatNumber>

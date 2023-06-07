@@ -17,10 +17,6 @@ module.exports = {
                   }
                 }
               ]);
-
-            //   console.log(housesWithUsers);
-              
-            // const results = await House.find({}, { __v: 0 })
             res.send(housesWithUsers)
         } catch (error) {
             console.log(error.message)
