@@ -1,10 +1,21 @@
 main {
-    margin: 2em;
-    min-height: calc(100vh - 72px);
+  margin: 2em;
+  min-height: calc(100vh - 72px);
 }
 
 html {
-    background-color: #1a202c;
+  background-color: #1a202c;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;500;600;700&family=Slackside+One&display=swap');
+@font-face {
+  font-family: "Malinsha";
+  src: url("../assets/fonts/malinsha/Malinsha.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Copykey";
+  src: url("../assets/fonts/copykey/Copykey.ttf") format("truetype");
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Mukta:wght@300;400;500;600;700;800&family=Reem+Kufi+Fun:wght@400;500;600;700&family=Signika+Negative:wght@300;400;500;600&family=Slackside+One&display=swap');

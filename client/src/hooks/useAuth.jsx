@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 // Auth context
-const AuthContext = createContext("null");
+const AuthContext = createContext();
 
 // Create hook
 export const useAuth = () => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${currentUser.token}`,
         },
       });
-      console.log(update);
+      // console.log(update);
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (load.current && currentUser) {
-      console.log('update');
+      console.log("update");
       updateUser();
     }
     return () => (load.current = true);
@@ -57,10 +57,12 @@ export const AuthProvider = ({ children }) => {
         username: data.username,
         password: data.password,
       });
+      console.log(response);
       const result = {
         token: response.data.token,
-        user: response.data.data[0],
+        user: response.data.data,
       };
+      console.log(result);
       setCurrentUser(result);
       saveSession(result);
       return response;

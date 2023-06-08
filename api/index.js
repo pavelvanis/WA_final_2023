@@ -14,7 +14,6 @@ module.exports = (app, mongoose) => {
     const authController = require('./Routes/AuthController')
     app.post('/signup', authController.signup)
     app.post('/login', authController.login)
-    app.post('/logout', authController.logout)
 
 /*     // Not found pages
     app.use('/api', (req, res, next) => {

@@ -37,7 +37,6 @@ function HouseContainer() {
   return (
     <Wrap spacingY="3em" spacingX="2em" justify="space-evenly">
       {offers.map((offer) => {
-        console.log("object");
         return <MyCard key={offer["_id"]} data={offer} />;
       })}
     </Wrap>
@@ -49,10 +48,10 @@ function MyCard({ data }) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  console.log(data.house[0].address);
+  // console.log(data.house[0].address);
   return (
     <LinkBox>
-      <LinkOverlay href="/#">
+      <LinkOverlay href="">
         <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
           <Image src={houseProp.imageUrl} alt={houseProp.imageAlt} />
 
@@ -69,7 +68,7 @@ function MyCard({ data }) {
                 textTransform="uppercase"
                 ml="2"
               >
-                {data ? "fef" : "fefe"}
+                {data.house[0].address.country} &bull; {data.house[0].address.city}
               </Box>
             </Box>
 

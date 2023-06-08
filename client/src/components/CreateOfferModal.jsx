@@ -8,6 +8,7 @@ import {
   Divider,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormHelperText,
   FormLabel,
   Grid,
@@ -21,6 +22,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   Textarea,
@@ -29,10 +31,13 @@ import {
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
+import { useUser } from "../hooks/useUser";
 
 export default function CreateOfferModal({ isOpen, onClose }) {
   const { currentUser } = useAuth();
+  const { saveHouse, saveOffer } = useUser();
 
+  // House props
   const [house, setHouse] = useState({
     address: {
       country: null,
@@ -53,13 +58,15 @@ export default function CreateOfferModal({ isOpen, onClose }) {
     },
   });
 
+  // Offer props
   const [offer, setOffer] = useState({
     userId: currentUser.user["_id"],
     attributes: {
-      value: 30000,
-    }
+      value: null,
+    },
   });
 
+  // Error props
   const [error, setError] = useState({
     address: {
       country: false,
@@ -72,12 +79,13 @@ export default function CreateOfferModal({ isOpen, onClose }) {
       house_type: false,
       description: false,
     },
+    attributes: {
+      value: false,
+    },
+    otherError: "",
   });
 
-  // useEffect(() => {
-  //   console.log(error);
-  // }, [error])
-
+  // Cheks form inputs
   const validForm = () => {
     setError({
       ...error,
@@ -92,6 +100,9 @@ export default function CreateOfferModal({ isOpen, onClose }) {
         house_type: house.props.house_type ? false : true,
         description: house.props.description ? false : true,
       },
+      attributes: {
+        value: offer.attributes.value ? false : true,
+      },
     });
     if (
       !house.address.country ||
@@ -100,19 +111,22 @@ export default function CreateOfferModal({ isOpen, onClose }) {
       !house.props.sqft ||
       !house.props.built_year ||
       !house.props.house_type ||
-      !house.props.description
+      !house.props.description ||
+      !offer.attributes.value
     )
       return false;
     return true;
   };
 
+  // Handle closing modal
   const handleClose = () => {
     onClose();
   };
 
+  // Handle submit
   const handleSubmit = async () => {
     if (!validForm()) return;
-    console.log(house);
+    // console.log(house);
     try {
       const createHouse = await axios.post(
         "/api/house",
@@ -123,8 +137,8 @@ export default function CreateOfferModal({ isOpen, onClose }) {
           },
         }
       );
-      console.log(createHouse);
       if (createHouse.status !== 200) return;
+      saveHouse({ houseId: createHouse.data["_id"] });
       const createOffer = await axios.post(
         "/api/offer",
         {
@@ -137,9 +151,22 @@ export default function CreateOfferModal({ isOpen, onClose }) {
           },
         }
       );
-      console.log(createOffer);
+      if (createOffer.status !== 200) return;
+      saveOffer({
+        offerId: createOffer.data["_id"],
+        houseId: createHouse.data["_id"],
+      });
+      // const updateUser = await axios.patch(`/api/user/${currentuser.user['_id']}`,{
+
+      // })
+
+      handleClose();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setError({
+        ...error,
+        otherError: "Something went wrong. Please try it again later.",
+      });
     }
   };
 
@@ -152,27 +179,34 @@ export default function CreateOfferModal({ isOpen, onClose }) {
         </ModalHeader>
         <Divider width="97%" m="auto" />
         <ModalBody>
-          <Grid
-            templateColumns={{ base: "1fr", md: "1fr 1fr" }} // Rozložení sloupců pro různá zařízení
-            gap="4em"
-            px={9}
-            py={4}
-            mt={3} // Odstup mezi prvky v gridu
-          >
-            <AddressBox
-              error={{ state: error, setError: setError }}
-              house={{ house: house, setHouse: setHouse }}
-            />
-            <PhototsBox />
-            <FeaturesBox
-              error={{ state: error, setError: setError }}
-              house={{ house: house, setHouse: setHouse }}
-            />
-            <BuildingBox
-              error={{ state: error, setError: setError }}
-              house={{ house: house, setHouse: setHouse }}
-            />
-          </Grid>
+          <FormControl isInvalid={error.otherError}>
+            <Grid
+              templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+              px={9}
+              py={4}
+              mt={3} 
+            >
+              <AddressBox
+                error={{ state: error, setError: setError }}
+                house={{ house: house, setHouse: setHouse }}
+              />
+              <BuildingBox
+                error={{ state: error, setError: setError }}
+                house={{ house: house, setHouse: setHouse }}
+              />
+              <FeaturesBox
+                error={{ state: error, setError: setError }}
+                house={{ house: house, setHouse: setHouse }}
+              />
+              <PriceBox
+                error={{ state: error, setError: setError }}
+                offer={{ offer: offer, setOffer: setOffer }}
+              />
+            </Grid>
+            <FormErrorMessage textAlign="center">
+              {error.otherError}
+            </FormErrorMessage>
+          </FormControl>
         </ModalBody>
         <ModalFooter display="flex" justifyContent="end" alignItems="center">
           <Box display="flex" gap={3} alignItems="center">
@@ -196,6 +230,43 @@ export default function CreateOfferModal({ isOpen, onClose }) {
   );
 }
 
+// Price box
+function PriceBox({ error, offer }) {
+  const handleChange = (e) => {
+    console.log(offer);
+    error.setError({
+      ...error.state,
+      attributes: {
+        [e.target.name]: false,
+      },
+    });
+    offer.setOffer({
+      ...offer.offer,
+      attributes: {
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+  return (
+    <GridItem>
+      <FormControl isInvalid={error.state.attributes.value}>
+        <Heading mb=".5em" fontSize="3xl">
+          Price
+        </Heading>
+        <NumberInput size="lg" min={0} width="60%">
+          <NumberInputField
+            name="value"
+            placeholder="Enter price here"
+            onChange={handleChange}
+          />
+        </NumberInput>
+        <FormErrorMessage>Price is required</FormErrorMessage>
+      </FormControl>
+    </GridItem>
+  );
+}
+
+// Address box
 function AddressBox({ error, house }) {
   const handleChange = (e) => {
     error.setError({
@@ -263,6 +334,7 @@ function AddressBox({ error, house }) {
   );
 }
 
+// Photos box
 function PhototsBox() {
   return (
     <GridItem>
@@ -271,6 +343,7 @@ function PhototsBox() {
   );
 }
 
+// Features box
 function FeaturesBox({ house }) {
   const handleChange = () => {
     house.setHouse({
@@ -280,24 +353,31 @@ function FeaturesBox({ house }) {
   };
 
   return (
-    <GridItem>
-      <Heading mb=".7em" fontSize="2xl">
-        Features
-      </Heading>
-      <Box pl={2} display="flex" flexDirection="column" gap="1em">
-        <Checkbox width="25%" name="garden">
-          Garden
-        </Checkbox>
-        <Checkbox width="25%" name="">
-          Pool
-        </Checkbox>
-        <Checkbox width="25%">Garage</Checkbox>
-        <Checkbox width="25%">Cooling</Checkbox>
-      </Box>
-    </GridItem>
+    <FormControl>
+      <GridItem>
+        <Heading mb=".7em" fontSize="2xl">
+          Features
+        </Heading>
+        <Box pl={2} display="flex" flexDirection="column" gap="1em">
+          <Checkbox width="25%" name="garden">
+            Garden
+          </Checkbox>
+          <Checkbox width="25%" name="pool">
+            Pool
+          </Checkbox>
+          <Checkbox width="25%" name="garage">
+            Garage
+          </Checkbox>
+          <Checkbox width="25%" name="cooling">
+            Cooling
+          </Checkbox>
+        </Box>
+      </GridItem>
+    </FormControl>
   );
 }
 
+// Building box
 function BuildingBox({ error, house }) {
   const handleChange = (e) => {
     error.setError({

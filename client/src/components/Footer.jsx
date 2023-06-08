@@ -17,7 +17,7 @@ export default function Footer() {
         </Link>
       </Flex>
       <Text mt={5} fontSize='.9em' textAlign="center">
-        © 2023 My Website. All rights reserved.
+        © 2023 Pavel Vaniš
       </Text>
     </Box>
   );

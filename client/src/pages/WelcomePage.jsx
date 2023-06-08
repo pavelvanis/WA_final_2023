@@ -1,7 +1,7 @@
 import { Box, Button, Image, Text, Container, Heading } from "@chakra-ui/react";
 
 import logo from "../assets/logo.svg";
-import background01 from "../assets/estate-background-04.jpeg";
+import background from "../assets/estate-background-04.jpeg";
 import { LoginModal, RegisterModal } from "../components";
 import { useState } from "react";
 
@@ -30,7 +30,7 @@ export default function WelcomePage() {
       color="black"
       minHeight="100vh"
       backgroundColor="gray.800"
-      bgImage={background01}
+      bgImage={background}
       bgSize="cover"
       bgPosition="center"
       bgRepeat="no-repeat"
@@ -39,6 +39,7 @@ export default function WelcomePage() {
         display="flex"
         sx={{
           justifyContent: "space-between",
+          flexDir: { base: "column", sm: "row" },
           alignItems: "center",
           p: "1.5em",
           pt: { sm: ".7em" },
@@ -53,17 +54,21 @@ export default function WelcomePage() {
           />
           <Text
             color="white"
-            fontSize="4xl"
-            fontWeight={600}
-            fontFamily="Slackside One, cursive"
+            fontSize="5xl"
+            fontWeight={100}
+            fontFamily="Copykey"
           >
             House Estate
           </Text>
         </Box>
         <LoginBtn onClick={openLoginModal} />
-        <LoginModal isOpen={isLoginOpen} onClose={closeLoginModal} openRegister={openRegisterModal}/>
+        <LoginModal
+          isOpen={isLoginOpen}
+          onClose={closeLoginModal}
+          openRegister={openRegisterModal}
+        />
       </Box>
-      <Container mt="2.4em" fontSize="1.4rem">
+      <Container py="2.4em" fontSize="1.4rem">
         <Heading sx={{ fontSize: { base: "6xl", md: "8xl" } }} mb=".7em">
           Welcome to our real estate platform!{" "}
         </Heading>
@@ -77,7 +82,11 @@ export default function WelcomePage() {
           property for sale or rent, this is the place to be.
         </Text>
         <RegisterBtn onClick={openRegisterModal} />
-        <RegisterModal isOpen={isRegisterOpen} onClose={closeRegisterModal} openLogin={openLoginModal} />
+        <RegisterModal
+          isOpen={isRegisterOpen}
+          onClose={closeRegisterModal}
+          openLogin={openLoginModal}
+        />
       </Container>
     </Box>
   );
@@ -85,7 +94,7 @@ export default function WelcomePage() {
 
 function LoginBtn({ onClick }) {
   return (
-    <Button onClick={onClick} size="sm">
+    <Button sx={{mt: {base: '4em', sm: '0'}}} onClick={onClick} size="sm">
       Sign In
     </Button>
   );

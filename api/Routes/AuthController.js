@@ -3,8 +3,16 @@ const createError = require('http-errors')
 const errorHandler = require('./Errors.handler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const axios = require('axios')
+const muchLogins = require('../../middleware/muchLogins')
 
+let logs = { name: '', logs: 1 }
+
+const some = ['knedla', 'knedla', 'baky', 'knedla', 'knedla', 'knedla']
+
+/* some.forEach(item => {
+   muchLogins(item, logs)
+    // console.log(key);
+}) */
 
 module.exports = {
     signup: async (req, res, next) => {
@@ -27,13 +35,23 @@ module.exports = {
     login: async (req, res, next) => {
         const username = req.body.username
         const password = req.body.password
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         try {
             console.log(req.body);
             const user = await User.findOne({ email: username })
+            // Compare input password and hash in DB
             const check = await bcrypt.compare(password, user.password)
 
-            console.log(user['_id']);
+            if (!check) {
+                muchLogins({ username: username, ip: ip, userId: user['_id'].valueOf() }, logs)
+                throw createError(401, 'Bad password')
+            }
 
+
+            // Creates token
+            const token = await jwt.sign({ name: user.email }, process.env.SECRET_KEY)
+
+            // Returns data of login user
             const userData = await User.aggregate([
                 { $match: { _id: user['_id'] } },
                 {
@@ -51,27 +69,17 @@ module.exports = {
                         foreignField: '_id',
                         as: 'offers',
                     },
-                },
+                }
+
             ]);
 
             console.log(userData[0]);
-
-            const token = await jwt.sign({ name: user.email }, process.env.SECRET_KEY)
-            if (!check) throw createError(401, 'Bad password')
-
             res.send({
-                message: 'Successful login', token: token, data: userData
+                message: 'Successful login', token: token, data: userData[0]
             })
         } catch (error) {
             console.log(error);
             next(error)
-        }
-    },
-    logout: async (req, res, next) => {
-        try {
-
-        } catch (error) {
-            console.log(error);
         }
     }
 }

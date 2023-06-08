@@ -1,6 +1,7 @@
 const express = require('express');
 const createError = require('http-errors');
 const path = require('path');
+const { listeners } = require('./api/Models/House.model');
 
 const app = express();
 require('dotenv').config();

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Footer, Navbar, RightBar } from "../components";
 import { useAuth } from "../hooks/useAuth";
+import { UserProvider } from "../hooks/useUser";
 
 export default function MainLayout() {
   const { currentUser } = useAuth();
@@ -10,8 +11,6 @@ export default function MainLayout() {
 
   useEffect(() => {
     if (load.current && !currentUser) {
-      console.log(currentUser);
-      console.log("user layout");
       return navigate("/welcome");
     }
     return () => (load.current = true);
@@ -22,12 +21,12 @@ export default function MainLayout() {
 
 function Body() {
   return (
-    <>
+    <UserProvider>
       <Navbar />
       <main>
         <Outlet />
       </main>
       <Footer />
-    </>
+    </UserProvider>
   );
 }

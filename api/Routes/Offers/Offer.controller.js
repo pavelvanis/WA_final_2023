@@ -23,7 +23,7 @@ module.exports = {
                     }
                 }
             ]);
-            console.log(offers);
+            // console.log(offers);
             res.send(offers)
         } catch (error) {
             console.log(error);

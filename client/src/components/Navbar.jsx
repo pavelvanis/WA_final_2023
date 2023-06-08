@@ -8,11 +8,14 @@ import {
   IconButton,
   useDisclosure,
   Collapse,
+  Image,
+  Text,
 } from "@chakra-ui/react";
 import { HamburgerIcon, SmallAddIcon, InfoIcon } from "@chakra-ui/icons";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth";
 import CreateOfferModal from "./CreateOfferModal";
+import logo from "../assets/logo.svg";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -21,9 +24,24 @@ const Navbar = () => {
     <header>
       <Box bg="gray.800" p={4} color="white" position="relative">
         <Flex alignItems="center">
-          <Link href="#" mr={4}>
-            Logo
-          </Link>
+          <Box display="flex" gap="4.5em" alignItems="center">
+            <Image
+              ml={6}
+              boxSize="4em"
+              src={logo}
+
+              sx={{ display: { base: "none", sm: "block" } }}
+            />
+            <Text
+              color="white"
+              fontSize="5xl"
+              fontWeight={100}
+              fontFamily="Copykey"
+            >
+              House Estate
+            </Text>
+          </Box>
+
           <Spacer />
           <Box
             display={{ base: "none", sm: "flex" }}
@@ -45,19 +63,14 @@ const Navbar = () => {
           </Box>
         </Flex>
         <Collapse in={isOpen} animateOpacity>
-          <Box mt={4} p={4} color="white">
-            <Link href="#" mb={2} display="block">
+          <Box mt={4} p={4} color="white" textAlign="center" fontSize="1.1em">
+            <Link href="/home" mb={2} display="block">
               Home
             </Link>
-            <Link href="#" mb={2} display="block">
-              About
+            <Link href="/account" mb={2} display="block">
+              Profile
             </Link>
-            <Link href="#" mb={2} display="block">
-              Contact
-            </Link>
-            <Button mt={4} colorScheme="teal" display="block" w="100%">
-              Sign In
-            </Button>
+            <LogOut />
           </Box>
         </Collapse>
       </Box>
@@ -70,7 +83,7 @@ export default Navbar;
 function LogOut() {
   const { logout } = useAuth();
   return (
-    <Button onClick={logout}>
+    <Button sx={{mt: {base: '.6em', sm: '0'}}} onClick={logout}>
       <FaSignOutAlt />
     </Button>
   );

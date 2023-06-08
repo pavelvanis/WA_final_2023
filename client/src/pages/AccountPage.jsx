@@ -14,6 +14,7 @@ import {
   StatLabel,
   StatHelpText,
   StatNumber,
+  Heading,
 } from "@chakra-ui/react";
 
 import { userProps } from "../__test__/const";
@@ -22,9 +23,10 @@ import country from "../assets/flag.svg";
 
 export default function AccountPage() {
   const { currentUser } = useAuth();
-  const user = userProps;
+  const user = currentUser.user;
 
   console.log(user);
+
   return (
     <Box
       backgroundColor="gray.100"
@@ -33,10 +35,10 @@ export default function AccountPage() {
       borderColor="gray.400"
       padding="1em"
     >
-      <User user={user.data} />
-      <Box mt={4}>
-        <UserBox title="my offers" type="offers" items={user.data.offers} />
-        <UserBox title="my houses" type="houses" items={user.data.houses} />
+      <User user={user} />
+      <Box mt={4} display="flex" flexDir="column" alignContent="center">
+        <UserBox title="my offers" type="offers" items={user.offers} />
+        <UserBox title="my houses" type="houses" items={user.houses} />
       </Box>
     </Box>
   );
@@ -56,7 +58,7 @@ function User({ user }) {
           gap: { base: "1.5em", sm: ".8em" },
         }}
       >
-        <UserName name={user.name} />
+        <UserName name={user} />
         <UserInfo user={user} />
       </Box>
       <Divider borderColor="gray.400" />
@@ -116,22 +118,11 @@ function UserBox({ title, items, type }) {
       <Text textTransform="capitalize" fontWeight={600} fontSize="xl">
         {title}
       </Text>
-      <Box overflowX="auto">
-        <Flex gap="4" p="4">
-          {items.map((item) => {
-            switch (type) {
-              case "offers":
-                return <Offer key={item["_id"]} offer={item}></Offer>;
-
-              case "houses":
-                return <House key={item["_id"]} house={item}></House>;
-
-              case "subs":
-                return <Sub key={item["_id"]} sub={item}></Sub>;
-            }
-          })}
-        </Flex>
-      </Box>
+      {items.length > 0 ? (
+        <MyBox items={items} type={type} />
+      ) : (
+        <EmptyBox text={type} />
+      )}
     </Box>
   );
 }
@@ -148,10 +139,9 @@ function Offer({ offer }) {
     month: "2-digit",
     year: "numeric",
   });
-  console.log(offer);
   return (
     <LinkBox as="article">
-      <LinkOverlay href={`/offer/${offer["_id"]}`}>
+      <LinkOverlay href="#">
         <Card minWidth={180}>
           <CardHeader sx={{ p: { base: ".5em", sm: "1em" } }} pb={0}>
             <Image rounded={5} src="https://via.placeholder.com/300x150" />
@@ -182,7 +172,7 @@ function House({ house }) {
   const area = `${house.props.sqft} m²`;
   return (
     <LinkBox as="article">
-      <LinkOverlay href={`/house/${house["_id"]}`}>
+      <LinkOverlay href="#">
         <Card minWidth={180}>
           <CardHeader sx={{ p: { base: ".5em", sm: "1em" } }}>
             <Image rounded={5} src="https://via.placeholder.com/300x150" />
@@ -192,11 +182,11 @@ function House({ house }) {
               <StatLabel display="flex" justifyContent="start" gap="1.3em">
                 <Box display="flex" alignItems="center" gap=".4em">
                   <Image boxSize="1em" src={country} />
-                  <Text>{house.adress.country}</Text>
+                  <Text>{house.address.country}</Text>
                 </Box>
                 <Box display="flex" alignItems="center" gap=".4em">
                   <Image boxSize="1em" src={location} />
-                  <Text>{house.adress.city}</Text>
+                  <Text>{house.address.city}</Text>
                 </Box>
               </StatLabel>
               <StatNumber mt={1}>{house.props.house_type}</StatNumber>
@@ -209,4 +199,48 @@ function House({ house }) {
   );
 }
 
-function Sub({ sub }) {}
+function MyBox({ items, type }) {
+  return (
+    <Box overflowX="auto">
+      <Flex gap="4" p="4">
+        {items.map((item) => {
+          switch (type) {
+            case "offers":
+              return <Offer key={item["_id"]} offer={item}></Offer>;
+
+            case "houses":
+              return <House key={item["_id"]} house={item}></House>;
+
+            case "subs":
+              return <Sub key={item["_id"]} sub={item}></Sub>;
+          }
+        })}
+      </Flex>
+    </Box>
+  );
+}
+
+function EmptyBox({ text }) {
+  return (
+    <Box
+      mt={4}
+      maxW="15em"
+      border="solid 2px"
+      borderRadius={5}
+      borderColor="gray.300"
+      borderStyle="dashed"
+      p={5}
+      py="4.5em"
+      sx={{ marginX: { base: "auto", sm: "0" } }}
+    >
+      <Heading
+        textAlign="center"
+        fontSize="3xl"
+        color="gray.400"
+        fontWeight={100}
+      >
+        No {text}
+      </Heading>
+    </Box>
+  );
+}
