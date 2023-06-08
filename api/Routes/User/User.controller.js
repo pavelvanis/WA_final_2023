@@ -48,8 +48,8 @@ module.exports = {
                     },
                 },
             ]);
-            console.log(user[0]);
-            console.log(user[0].attributes);
+            // console.log(user[0]);
+            // console.log(user[0].attributes);
             errorHandler.notFound(user, 'User not found')
             res.send(user[0])
         } catch (error) {

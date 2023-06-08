@@ -24,7 +24,7 @@ const Navbar = () => {
     <header>
       <Box bg="gray.800" p={4} color="white" position="relative">
         <Flex alignItems="center">
-          <Box display="flex" gap="4.5em" alignItems="center">
+          <Box display="flex" gap="4em" alignItems="center">
             <Image
               ml={6}
               boxSize="4em"
@@ -48,8 +48,8 @@ const Navbar = () => {
             alignItems="center"
             gap="1.5em"
           >
-            <Link href="/home">Home</Link>
-            <Link href="/account">Profile</Link>
+            <Link fontSize='1.2em' href="/home">Home</Link>
+            <Link fontSize='1.2em' href="/account">Profile</Link>
             <AddOfferBtn />
             <LogOut />
           </Box>
