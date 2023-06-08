@@ -39,29 +39,28 @@ Na stránce je možné vytvářet nové nabídky prodejů domů a prohlížet si
 #### API
  - API poběží na adrese `http://localhost:3000/api/`
 	
-#### !! API je přístupná pouze s tokenem, který se generuje uživateli při přihlášení !!
+	#### !! API je přístupná pouze s tokenem, který se generuje uživateli při přihlášení !!
 
+	## Users 
+	- GET -  `/user` - vrátí seznam všech uživatelů v databázi
+	- POST -  `/user` - vytvoří nového uživatele
+	- GET -  `/user/:id` - vrátí informace o uživateli podle id
+	- PATCH -  `/user/:id` - aktualizuje uživatele s daným id
+	- DELETE -  `/user/:id` - vymaže uživatele s daným id
 
-## Users 
-- GET -  `/user` - vrátí seznam všech uživatelů v databázi
-- POST -  `/user` - vytvoří nového uživatele
-- GET -  `/user/:id` - vrátí informace o uživateli podle id
-- PATCH -  `/user/:id` - aktualizuje uživatele s daným id
-- DELETE -  `/user/:id` - vymaže uživatele s daným id
+	## Houses 
+	- GET -  `/house` - vrátí seznam všech domů v databázi
+	- POST -  `/house` - vytvoří nový dům
+	- GET -  `/house/:id` - vrátí informace o domu podle zadaného id
+	- PATCH -  `/house/:id` - aktualizuje dům s daným id
+	- DELETE -  `/house/:id` - vymaže dům s daným id
 
-## Houses 
-- GET -  `/house` - vrátí seznam všech domů v databázi
-- POST -  `/house` - vytvoří nový dům
-- GET -  `/house/:id` - vrátí informace o domu podle zadaného id
-- PATCH -  `/house/:id` - aktualizuje dům s daným id
-- DELETE -  `/house/:id` - vymaže dům s daným id
-
-## Offers
-- GET -  `/offer` - vrátí seznam všech nabídek v databázi
-- POST -  `/offer` - vytvoří novou nabídku
-- GET -  `/offer/:id` - vrátí informace o nabídce podle zadaného id
-- PATCH -  `/offer/:id` - aktualizuje nabídku s daným id
-- DELETE -  `/offer/:id` - vymaže nabídku s daným id
+	## Offers
+	- GET -  `/offer` - vrátí seznam všech nabídek v databázi
+	- POST -  `/offer` - vytvoří novou nabídku
+	- GET -  `/offer/:id` - vrátí informace o nabídce podle zadaného id
+	- PATCH -  `/offer/:id` - aktualizuje nabídku s daným id
+	- DELETE -  `/offer/:id` - vymaže nabídku s daným id
 
 #### Frontend
 
