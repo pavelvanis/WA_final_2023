@@ -1,21 +1,35 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../hooks/UserAuth";
+import { useAuth } from "../hooks/useAuth";
+import { Button, Input } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthButtonsTest() {
   const { login, signup, logout } = useAuth();
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    return () => {
+      axios
+        .get("/api/user", {
+          headers: {
+            Authorization:
+              "Baerar eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibG9yZGtuZWRsaWsiLCJpYXQiOjE2ODU2MDU0MTN9.QwuU48Hcs-3Y8uOI1L82O62YhyBebWjtEVt3XG8smEE",
+          },
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    };
+  }, []);
 
   const [userData, setUserData] = useState({
-    email: "test.email@email.cz",
-    password: "someHASH",
-    phone: "+420 123 456 789",
+    email: "",
+    password: "",
+    phone: "",
     name: {
-      first_name: "Thomas",
-      last_name: "Hornning",
-    },
-    attributes: {
-      offers: [],
-      houses: [],
-      subscribes: [],
+      first_name: "",
+      last_name: "",
     },
   });
 
@@ -35,33 +49,44 @@ export default function AuthButtonsTest() {
         signup(userData);
         break;
       case "login":
-        login(userData);
+        login(userData).then((res) => console.log(currentUser));
         break;
       case "logout":
         logout();
     }
   };
 
-  useEffect(() => {
-    return () => {
-      console.log(userData);
-    };
-  }, [userData]);
-
   return (
     <div>
       <form onSubmit={handle}>
-        <input type="text" name="email" onChange={handleChange} />
-        <input type="text" name="password" onChange={handleChange} />
-        <button type="submit" onClick={() => setClicked("login")}>
+        <Input
+          type="text"
+          name="email"
+          onChange={handleChange}
+          placeholder="email"
+        />
+        <Input
+          type="text"
+          name="password"
+          onChange={handleChange}
+          placeholder="password"
+        />
+        <Input
+          type="text"
+          name="phone"
+          onChange={handleChange}
+          placeholder="phone"
+        />
+
+        <Button type="submit" onClick={() => setClicked("login")}>
           Login
-        </button>
-        <button type="submit" onClick={() => setClicked("signup")}>
+        </Button>
+        <Button type="submit" onClick={() => setClicked("signup")}>
           Signup
-        </button>
-        <button type="submit" onClick={() => setClicked("logout")}>
+        </Button>
+        <Button type="submit" onClick={() => setClicked("logout")}>
           Logout
-        </button>
+        </Button>
       </form>
     </div>
   );

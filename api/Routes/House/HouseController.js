@@ -7,21 +7,32 @@ const errorHandler = require('../Errors.handler')
 module.exports = {
     getAll: async (req, res, next) => {
         try {
-            const results = await House.find({}, { __v: 0 })
-            res.send(results)
+            const housesWithUsers = await House.aggregate([
+                {
+                  $lookup: {
+                    from: 'users', // Název kolekce (tabulky) uživatelů
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                  }
+                }
+              ]);
+            res.send(housesWithUsers)
         } catch (error) {
             console.log(error.message)
         }
     },
     create: async (req, res, next) => {
         try {
-            // console.log(req.body);
+            console.log('create a house');
+            console.log(req.body);
             const house = new House(req.body)
             const result = await house.save()
             console.log(result);
             res.send(result)
         } catch (error) {
             errorHandler.validation(error, next)
+            console.log(error);
         }
     },
     findOne: async (req, res, next) => {

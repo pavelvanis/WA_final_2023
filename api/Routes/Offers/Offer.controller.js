@@ -5,9 +5,28 @@ const errorHandler = require('../Errors.handler')
 module.exports = {
     getAll: async (req, res, next) => {
         try {
-            const offers = await Offer.find({}, { __v: 0 })
+            const offers = await Offer.aggregate([
+                {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'user'
+                    }
+                }, {
+
+                    $lookup: {
+                        from: 'houses',
+                        localField: 'houseId',
+                        foreignField: '_id',
+                        as: 'house'
+                    }
+                }
+            ]);
+            // console.log(offers);
             res.send(offers)
         } catch (error) {
+            console.log(error);
             next(error)
         }
     },

@@ -1,33 +1,30 @@
-import { createBrowserRouter, Route } from "react-router-dom";
-import { useAuth } from "./hooks/UserAuth";
-import HomePage from "./pages/HomePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import WelcomePage from "./pages/WelcomePage";
-
-const login = false;
-
-const Login = ({ path, ...props }) => {
-  const { currentUser } = useAuth();
-  return currentUser ? <HomePage /> : <WelcomePage />;
-};
+import { createBrowserRouter, Navigate, Route } from "react-router-dom";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
+import { AccountPage, HomePage, WelcomePage, NotFoundPage } from "./pages";
+import MainLayout from "./Layout/MainLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <MainLayout />,
     children: [
       {
         path: "/",
-        element: <Login path="/" element={<HomePage />} />,
-      },
-      {
-        path: "/welcome",
-        element: <WelcomePage />,
+        element: <HomePage />,
       },
       {
         path: "/home",
         element: <HomePage />,
       },
+      {
+        path: "/account",
+        element: <AccountPage />,
+      },
     ],
+  },
+  {
+    path: "/welcome",
+    element: <WelcomePage />,
   },
   {
     path: "*",

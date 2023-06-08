@@ -1,10 +1,12 @@
 
-### Get House
+### Get Houses
 GET http://localhost:3000/api/house
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 ### Create House
 POST http://localhost:3000/api/house
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 {
   "adress": {
@@ -56,6 +58,7 @@ Content-Type: application/json
     "price": 565000,
     "description": "This family house features a modern design and is equipped with all the necessary amenities for comfortable living. It consists of several spacious rooms that provide ample space for every family member. There is also a well-equipped kitchen with modern appliances, serving as a central area for cooking and family gatherings."
   },
+  "userId": "64784b8d0896db218376a6b3",
   "sales": [
     { "date": "2022-07-01", "value": 540000 },
     { "date": "2023-02-15", "value": 560000 }
@@ -124,17 +127,20 @@ DELETE   http://localhost:3000/api/house/64770251a515197702cf0f1d
 
 ### Get All Offers
 GET   http://localhost:3000/api/offer
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
+
 
 ### Create Offer
 POST   http://localhost:3000/api/offer
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 {
-  "houseId": "6475b28b9d791f727c563f06",
-  "userId": "someUserid",
+  "houseId": "6479ea7f441d0774693e86ac",
+  "userId": "64784b8d0896db218376a6b3",
   "attributes": {
     "date": "2023-03-27",
-    "value": 450000,
+    "value": 450000
   }
 }
 
@@ -158,87 +164,54 @@ DELETE   http://localhost:3000/api/offer/6475c74679168cd73a2649a0
 
 ### Get All Users
 GET   http://localhost:3000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDI3NzZ9.5V8pBu0nyAGZc3JWa_zn3xskf1pVe7cgud_-IWa5nIc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 
 ### Create a User
 POST   http://localhost:3000/api/user
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 {
     "email": "test.email@email.cz",
     "password": "someHASH",
     "phone": "+420 123 456 789",
-    "name": {
-      "first_name": "Thomas",
-      "last_name": "Hornning"
-    },
+    "first_name": "Thomas",
+    "last_name": "Hornning",
     "attributes": {
-      "offers": [
-        {
-          "offerId": "fefaekn283h3f37g8fbw3"
-        },
-        {
-          "offerId": "n2b3f7bfj3bkjbbfjb23b"
-        },
-        {
-          "offerId": "n28b3f373gf03nnf3ff3f"
-        }
-      ],
-      "houses": [
-        {
-          "houseId": "ef83f92bb2ubg6v2c273b"
-        }
-      ],
-      "subscribes": [
-        {
-          "offerId": "nuf83bf2bfjbb3yb2f33f"
-        },
-        { 
-        "offerId": "nuf83bf2bfjb24mffd33f"
-        }
-      ]
+      "offers": [],
+      "houses": [],
+      "subscribes": []
   }
 }
 
 ### Get One User
-GET   http://localhost:3000/api/user/6475dc773e0cf94e5752885b
+GET   http://localhost:3000/api/user/64784b8d0896db218376a6b3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 ### Update a User
-PATCH   http://localhost:3000/api/user/6475dc773e0cf94e5752885b
+PATCH   http://localhost:3000/api/user/64784b8d0896db218376a6b3
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3RW1haWwiLCJpYXQiOjE2ODU2MDc2NTF9.V0t20dgIKD7lOhb4tuslBGPj3Th8Zw6naP73NrKn66k
 
 {
-  "attributes": {
-    "email": "test.email@email.cz",
-    "pass": "someHASH",
-    "phone": "+420 123 456 789",
-    "name": {
-      "first_name": "Thomas",
-      "last_name": "Hornning"
-    }
-  },
-  "offers": [
-    {
-      "offerId": "n2b3f7bfj3bkjbbfjb23b"
-    },
-    {
-      "offerId": "n28b3f373gf03nnf3ff3f"
-    }
-  ],
-  "houses": [
-    {
-      "houseId": "ef83f92bb2ubg6v2c273b"
-    }
-  ],
-  "subscribes": [
-    {
-      "offerId": "nuf83bf2bfjbb3yb2f33f"
-    },
-    {
-      "offerId": "nuf83bf2bfjb24mffd33f"
-    }
-  ]
+    "attributes": {
+      "offers": [
+        {
+          "offerId": "647c8d39966d43f2af0e392b"
+        }
+      ],
+      "houses": [
+        {
+          "houseId": "647f1a64f577f1689a1c897c"
+        }
+      ],
+      "subscribes": [
+        {
+          "offerId": "647c8d39966d43f2af0e392b"
+        }
+      ]
+  }
 }
 
 ### Delete a User
@@ -254,7 +227,7 @@ Content-Type: application/json
 {
     "email": "newEmail",
     "password": "hesloheslo",
-    "phone": "+420 123 456 789",
+    "phone": "+420 123 456 7",
     "name": {
       "first_name": "Thomas",
       "last_name": "Hornning"
@@ -292,6 +265,6 @@ POST   http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "username": "newEmail",
-  "password": "hesloheslo"
+  "username": "lordknedlik",
+  "password": "mojeheslo"
 }

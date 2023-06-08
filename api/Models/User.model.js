@@ -11,46 +11,43 @@ const UserSchema = new Schema({
         required: true
     },
     phone: {
+        type: Number,
+        required: true
+    },
+    first_name: {
         type: String,
         required: true
     },
-    name: {
-        first_name: {
-            type: String,
-            required: true
-        },
-        last_name: {
-            type: String,
-            required: true
-        }
+    last_name: {
+        type: String,
+        required: true
     },
     attributes: {
         offers: [
             {
                 offerId: {
-                    type: String,
-                    required: true
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Offer'
                 },
             }
         ],
         houses: [
             {
                 houseId: {
-                    type: String,
-                    required: true
-                }
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'House'
+                },
             }
         ],
         subscribes: [
             {
                 offerId: {
-                    type: String,
-                    required: true
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Offer'
                 }
             }
         ]
-    },
-
+    }
 })
 
 const User = mongoose.model('user', UserSchema)

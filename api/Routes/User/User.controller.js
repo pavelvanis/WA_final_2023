@@ -4,6 +4,7 @@ const errorHandler = require('../Errors.handler')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
 
+
 module.exports = {
     getAll: async (req, res, next) => {
         try {
@@ -27,10 +28,32 @@ module.exports = {
         try {
             const id = req.params.id
             errorHandler.validId(id)
-            const user = await User.findById(id)
+
+            const user = await User.aggregate([
+                { $match: { _id: new mongoose.Types.ObjectId(id) } },
+                {
+                    $lookup: {
+                        from: 'houses',
+                        localField: 'attributes.houses.houseId',
+                        foreignField: '_id',
+                        as: 'houses',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'offers',
+                        localField: 'attributes.offers.offerId',
+                        foreignField: '_id',
+                        as: 'offers',
+                    },
+                },
+            ]);
+            // console.log(user[0]);
+            // console.log(user[0].attributes);
             errorHandler.notFound(user, 'User not found')
-            res.send(user)
+            res.send(user[0])
         } catch (error) {
+            console.log(error);
             next(error)
         }
     },
